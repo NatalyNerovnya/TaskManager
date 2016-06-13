@@ -1,0 +1,38 @@
+﻿@*@using TaskManager.Models
+@model IEnumerable<TaskViewModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2> Tasks </h2>
+    <div>
+        @foreach (var item in Model)
+        {
+            <h3>Name: @item.Name</h3>
+            <p>Id : @item.Id</p>
+            <p>Short Description : @item.Description</p>
+            <p>IsChecked: @item.IsChecked</p>
+            <p>From User Id: @item.FromUserId</p>
+            <p>To User Id : @item.ToUserId</p>
+        }
+    </div>
+    <p>
+        @Html.ActionLink("Add new", "Create")
+    </p>
+</body>
+</html>*@
+
+@model TaskManager.Models.TaskViewModel
+@{
+    ViewBag.Title = "Task Manager";
+}
+
+@*@Html.Partial("_TasksView")*@
