@@ -1,7 +1,9 @@
-﻿using System;
+﻿using BLL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
 
 namespace TaskManager.Models
 {
@@ -21,10 +23,18 @@ namespace TaskManager.Models
 
         public string Description { get; set; }
 
-        //public virtual ICollection<DalMission> Missions { get; set; }
+        public virtual ICollection<MissionEntity> Missions { get; set; }
 
-        //public virtual DalUser User { get; set; }
+        public virtual UserEntity User { get; set; }
 
-        //public virtual DalUser User1 { get; set; }
+        public virtual UserEntity User1 { get; set; }
+    }
+
+    public class TasksViewModel
+    {
+        public List<TaskViewModel> Tasks;
+        public List<TaskViewModel> CheckedTasks;
+        public int CountTasks;
+        public int CountCheckedTasks;
     }
 }

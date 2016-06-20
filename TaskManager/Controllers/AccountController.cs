@@ -10,22 +10,22 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TaskManager.Infrastructura.Provider;
 using TaskManager.Models.AccauntViewModel;
+using ORM;
 
 namespace TaskManager.Controllers
 {
     public class AccountController : Controller
     {
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
         private IUserService _userService;
 
         public AccountController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        public ActionResult Login()
+        {
+            return View();
         }
 
         //public AccountController()
@@ -40,12 +40,17 @@ namespace TaskManager.Controllers
             if (ModelState.IsValid)
             {
                 // поиск пользователя в бд
-                var user = _userService.GetOneByPredicate(u => u.Email == model.UserName && u.Password == model.Password);
+                //var user = _userService.GetOneByPredicate(u => u.Email == model.UserName && u.Password == model.Password);
                 //var user = _userService.GetById(1);
+                User user = null;
+                using (TaskManagerEntityModel db = new TaskManagerEntityModel())
+                {
+                    user = db.Users.FirstOrDefault(u => u.Login == model.UserName && u.Password == model.Password);
+
+                }
                 if (user != null)
                 {
-                    //Поставила фолс в надежде на то, что при закрытии программы юзер будет выходить. Но за этим ли тут это?
-                    FormsAuthentication.SetAuthCookie(model.UserName, false);
+                    FormsAuthentication.SetAuthCookie(model.UserName, true);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -56,6 +61,7 @@ namespace TaskManager.Controllers
 
             return View(model);
         }
+
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -68,9 +74,15 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _userService.GetOneByPredicate(u => u.Email == model.UserName);
+                //var user = _userService.GetOneByPredicate(u => u.Email == model.UserName);
+                User user = null;
+                using (TaskManagerEntityModel db = new TaskManagerEntityModel())
+                {
+                    user = db.Users.FirstOrDefault(u => u.Login == model.UserName && u.Password == model.UserPassword);
+                }
                 if (user == null)
                 {
+                    
                     // создаем нового пользователя
                     _userService.Create(new UserEntity
                     {
@@ -94,6 +106,7 @@ namespace TaskManager.Controllers
 
             return View(model);
         }
+
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
