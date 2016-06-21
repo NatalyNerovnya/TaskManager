@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -182,6 +183,7 @@
     <Compile Include="Models\AccauntViewModel\RegisterViewModel.cs" />
     <Compile Include="Models\AccauntViewModel\UserViewModel.cs" />
     <Compile Include="Models\Mapper\ViewModelMapper.cs" />
+    <Compile Include="Models\MissionViewModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -250,6 +252,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\StartView.cshtml" />
     <Content Include="Views\Shared\_TasksView.cshtml" />
+    <Content Include="Views\Mission\_MissionsView.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -264,10 +267,6 @@
     <ProjectReference Include="..\DependencyResolver\DependencyResolver.csproj">
       <Project>{adbc4aa6-826c-45ec-beff-c34c1f505eca}</Project>
       <Name>DependencyResolver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ORM\ORM.csproj">
-      <Project>{3defd4a9-72fa-4506-a05f-9d4241f12a47}</Project>
-      <Name>ORM</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

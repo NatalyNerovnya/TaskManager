@@ -39,5 +39,37 @@ namespace TaskManager.Models.Mapper
             model.CountCheckedTasks= model.CheckedTasks.Count;
             return model;
         }
+
+
+        public static MissionViewModel GetMissionViewModel(this MissionEntity bllEntity)
+        {
+            if (bllEntity == null)
+                return null;
+            return new MissionViewModel()
+            {
+                Id = bllEntity.Id,
+                Name = bllEntity.Name,
+                Description = bllEntity.Description,
+                IsDone = bllEntity.IsDone,
+                TaskId = bllEntity.TaskId
+            };
+        }
+
+
+        public static MissionsViewModel GetMissionsViewModel(this List<MissionEntity> listBllEntity)
+        {
+            var missions = listBllEntity.Where(m => m.IsDone == false).Select(m => m.GetMissionViewModel
+                ()).ToList();
+            var doneMissions = listBllEntity.Where(m => m.IsDone == true).Select(m => m.GetMissionViewModel
+                ()).ToList();
+            MissionsViewModel model = new MissionsViewModel()
+            {
+                Missions=missions,
+                DoneMissions = doneMissions
+            };
+            model.CountMissions = missions.Count;
+            model.CountDoneMissions = doneMissions.Count;
+            return model;
+        }
     }
 }

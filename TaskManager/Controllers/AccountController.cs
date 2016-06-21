@@ -10,7 +10,6 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TaskManager.Infrastructura.Provider;
 using TaskManager.Models.AccauntViewModel;
-using ORM;
 
 namespace TaskManager.Controllers
 {
@@ -40,14 +39,8 @@ namespace TaskManager.Controllers
             if (ModelState.IsValid)
             {
                 // поиск пользователя в бд
-                //var user = _userService.GetOneByPredicate(u => u.Email == model.UserName && u.Password == model.Password);
-                //var user = _userService.GetById(1);
-                User user = null;
-                using (TaskManagerEntityModel db = new TaskManagerEntityModel())
-                {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.UserName && u.Password == model.Password);
-
-                }
+               
+                var user = _userService.GetOneByPredicate(u => u.Login == model.UserName && u.Password == model.Password);
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, true);
@@ -64,7 +57,7 @@ namespace TaskManager.Controllers
 
         [AllowAnonymous]
         public ActionResult Register()
-        {
+        {           
             return View();
         }
 
@@ -74,15 +67,10 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var user = _userService.GetOneByPredicate(u => u.Email == model.UserName);
-                User user = null;
-                using (TaskManagerEntityModel db = new TaskManagerEntityModel())
-                {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.UserName && u.Password == model.UserPassword);
-                }
+                var user = _userService.GetOneByPredicate(u => u.Email == model.UserEmail);
                 if (user == null)
                 {
-                    
+
                     // создаем нового пользователя
                     _userService.Create(new UserEntity
                     {
@@ -105,6 +93,7 @@ namespace TaskManager.Controllers
             }
 
             return View(model);
+
         }
 
         public ActionResult Logoff()

@@ -1,5 +1,4 @@
 ﻿using BLL.Interfaces;
-using ORM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +8,12 @@ using TaskManager.Models.Mapper;
 
 namespace TaskManager.Controllers
 {
+    //Do I realy need IUserService here??
     public class HomeController : Controller
     {
         private readonly ITaskService taskService;
         private readonly IUserService userService;
-        
+
         public HomeController(ITaskService taskService, IUserService userService)
         {
             this.taskService = taskService;
@@ -22,36 +22,31 @@ namespace TaskManager.Controllers
 
         public ActionResult Index(string sortOrder)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                User user = null;
-                using (TaskManagerEntityModel db = new TaskManagerEntityModel())
-                {
-                    user = db.Users.FirstOrDefault(u => u.Login == User.Identity.Name);
-                }
-                //var user = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);
-                var model = taskService.GetAllByPredicate(f => f.Id == user.Id).ToList();
-                //Task model = null;
-                //using (TaskManagerEntityModel db = new TaskManagerEntityModel())
-                //{
-                //    model = db.Tasks.FirstOrDefault(u => u.Id == user.Id);
-                //}
-                var viewModel = model.GetTasksViewModel();
-                Session["tasks"] = model.Where(f => f.IsChecked != true);
-                ViewBag.TaskAction = true;
-                return View(viewModel);
-            }
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    var user = taskService.GetOneByPredicate(u => u. == User.Identity.Name);
+            //    //var model = taskService.GetAllByPredicate(f => f.Id == user.Id).ToList();
+            //    //Task model = null;
+            //    //using (TaskManagerEntityModel db = new TaskManagerEntityModel())
+            //    //{
+            //    //    model = db.Tasks.FirstOrDefault(u => u.Id == user.Id);
+            //    //}
+            //    var viewModel = model.GetTasksViewModel();
+            //    Session["tasks"] = model.Where(f => f.IsChecked != true);
+            //    ViewBag.TaskAction = true;
+            //    return View(viewModel);
+            //}
             return View("StartView");
         }
 
 
-        //public ActionResult ShowUserTasks(int id)
-        //{
-        //    var tasks = taskService.GetAllByPredicate(t => t.Id == id).ToList().GetTasksViewModel();
-        //    Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == id);
-        //    ViewBag.TaskAction = true;
-        //    return PartialView("_TasksView", tasks);
-        //}
+        public ActionResult ShowUserTasks(int id)
+        {
+            var tasks = taskService.GetAllByPredicate(t => t.ToUserId == id).ToList().GetTasksViewModel();
+            Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == id);
+            ViewBag.TaskAction = true;
+            return PartialView("_TasksView", tasks);
+        }
         
 
         ////[HttpPost]
@@ -181,19 +176,5 @@ namespace TaskManager.Controllers
 
 
 
-
-
-
-        //public ActionResult Index()
-        //{
-        //    //string result = "Вы не авторизованы";
-        //    //if (User.Identity.IsAuthenticated)
-        //    //{
-        //    //    result = "Ваш логин: " + User.Identity.Name;
-        //    //}
-
-        //    //return View(result);
-        //    return View();
-        //}
     }
 }
