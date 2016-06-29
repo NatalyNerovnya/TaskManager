@@ -1,9 +1,11 @@
-﻿using BLL.Interfaces;
+﻿using BLL.Entities;
+using BLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskManager.Models;
 using TaskManager.Models.Mapper;
 
 namespace TaskManager.Controllers
@@ -39,13 +41,50 @@ namespace TaskManager.Controllers
             return View("StartView");
         }
 
-
+        [HttpPost]
         public ActionResult ShowUserTasks(int id)
         {
             var tasks = taskService.GetAllByPredicate(t => t.ToUserId == id).ToList().GetTasksViewModel();
             Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == id);
             ViewBag.TaskAction = true;
             return PartialView("_TasksView", tasks);
+        }
+
+        [HttpPost]
+        public ActionResult ShowFromUserTasks(int id)
+        {
+            var tasks = taskService.GetAllByPredicate(t => t.FromUserId == id).ToList().GetTasksViewModel();
+            Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == id);
+            ViewBag.TaskAction = true;
+            
+            return PartialView("_TasksView", tasks);
+        }
+
+        public ActionResult CreateTask()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateTask(TaskViewModel task)
+        {
+            taskService.Create(new TaskEntity{
+                Id = task.Id,
+                Name = task.Name,
+                Missions = task.Missions,
+                IsChecked = task.IsChecked,
+                DateCreation = task.DateCreation,
+                Description = task.Description,
+                FromUserId = task.FromUserId,
+                ToUserId = task.ToUserId//,
+                //User = task.User,
+                //User1 = task.User1   
+            });
+           
+            //Where should I redirect to?
+            return View(task);
+            //return RedirectToAction("Index");
+            
         }
         
 
@@ -153,16 +192,16 @@ namespace TaskManager.Controllers
         ////    return RedirectToAction("Index");
         ////}
 
-        ////public ActionResult Sort(string sortOrder)
-        ////{
-        ////    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
-        ////    ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
+        public ActionResult Sort(string sortOrder)
+        {
+        //    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
+        //    ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
 
-        ////    var files = Session["files"];
-        ////    var model = taskService.SortFiles((files as IEnumerable<FileEntity>), sortOrder).ToList().GetTasksViewModel();
-        ////    ViewBag.FileAction = false;
-        ////    return PartialView("_FilesView", model);
-        ////}
+            var tasks = Session["tasks"];
+            var model = taskService.SortTasks((tasks as IEnumerable<TaskEntity>), sortOrder).ToList().GetTasksViewModel();
+        //    ViewBag.FileAction = false;
+            return PartialView("_TasksView", model);
+        }
 
 
 

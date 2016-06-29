@@ -30,7 +30,8 @@ namespace BLL.Services
 
         public IEnumerable<UserEntity> GetAllEntities()
         {
-            return userRepository.GetAll().Select(u => u.GetBllEntity());
+            //ToList
+            return userRepository.GetAll().Select(u => u.GetBllEntity()).ToList();
         }
         public UserEntity GetById(int id)
         {
@@ -41,7 +42,8 @@ namespace BLL.Services
         {
             var visitor = new MyExpressionVisitor<UserEntity, DalUser>(Expression.Parameter(typeof(DalUser), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<DalUser, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
-            return userRepository.GetAllByPredicate(exp2).Select(user => user.GetBllEntity());
+            //ToList()
+            return userRepository.GetAllByPredicate(exp2).Select(user => user.GetBllEntity()).ToList();
         }
 
         public UserEntity GetOneByPredicate(Expression<Func<UserEntity, bool>> f)

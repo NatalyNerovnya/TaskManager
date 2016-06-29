@@ -50,7 +50,8 @@ namespace DAL.Concrete
             var visitor = new MyExpressionVisitor<DalUser, User>(Expression.Parameter(typeof(User), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<User, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
             var x = context.Set<User>().Include(user => user.Roles).Where(exp2).ToList();
-            return context.Set<User>().Include(user => user.Roles).Where(exp2).Select(user => user.GetDalEntity());
+            return x.Select(user => user.GetDalEntity());
+            //return context.Set<User>().Include(user => user.Roles).Where(exp2).Select(user => user.GetDalEntity());
         }
 
         //public IEnumerable<DalUser> GetAllByPredicate(Expression<Func<DalUser, bool>> f)

@@ -67,7 +67,7 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _userService.GetOneByPredicate(u => u.Email == model.UserEmail);
+                var user = _userService.GetOneByPredicate(u => u.Email == model.UserEmail && u.Login == model.UserName);
                 if (user == null)
                 {
 

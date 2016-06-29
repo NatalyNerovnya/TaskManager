@@ -9,5 +9,6 @@ namespace BLL.Interfaces
 {
     public interface ITaskService : IService<TaskEntity>
     {
+        IEnumerable<TaskEntity> SortTasks(IEnumerable<TaskEntity> tasks, string sortOrder);
     }
 }

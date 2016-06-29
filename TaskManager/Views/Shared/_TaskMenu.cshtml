@@ -1,24 +1,97 @@
-﻿
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-9 ">
-            @if (User.Identity.IsAuthenticated)
-            {
-                @*<div class="navbar-form navbar-right">
-                    <div class="btn-group btn-group-justified">
-                        <div class="btn-group">
-                            @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                            {
-                                <span class="btn btn-primary btn-file">
-                                    Browse&hellip; <input type="file" name="File" id="uploadFiles" />
-                                </span>
+﻿@model TaskManager.Models.TaskViewModel
 
-                            }
+@if(User.Identity.IsAuthenticated)
+{ 
+<div class=" col-md-11 ">
+    <div class="panel">
+        <div class="panel-heading text-center ">
+            <h3>Creating new task</h3>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("CreateTask", "Home", FormMethod.Post@*, new { enctype = "multipart/form-data" }*@))
+            {
+                 <fieldset>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Enter name of the task" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description)
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Enter the description" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ToUserId)
+                        @Html.TextBoxFor(m => m.ToUserId, new { @class = "form-control", @placeholder = "Enter the id of the user" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FromUserId)
+                        @Html.TextBoxFor(m => m.FromUserId, new { @class = "form-control", @placeholder = "Enter the id of the user from" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-success btn-lg btn-block" >Create</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="reset" class="btn btn-info btn-lg btn-block">Cancel</button>
                         </div>
                     </div>
-                </div>*@
+                </fieldset>
             }
         </div>
+       
+    </div>
+</div>
+}
+@*<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6 ">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="navbar-form navbar-right">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group">
+                            <div class="panel-body">
+                                @using (Html.BeginForm("CreateTask", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+                                        <fieldset>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m=>m.Name)
+                                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Enter name of the task" })
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Description)
+                                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Enter the description" })
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ToUserId)
+                                                @Html.TextBoxFor(m => m.ToUserId, new { @class = "form-control", @placeholder = "Enter the id of the user" })
+                                            </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn btn-success btn-lg btn-block">Create</button>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button type="reset" class="btn btn-info btn-lg btn-block">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>*@
         @*<div class="col-md-3">
             <div class="navbar-form navbar-right">
                 @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @name = "form", @onsubmit = "return false;" }))
@@ -31,6 +104,11 @@
                     </div>
                 }
             </div>*@
-        </div>
-    </div>
-</div>
+    @*</div>
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.validate.bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.min.js"></script>
+}

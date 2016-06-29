@@ -24,8 +24,8 @@ namespace BLL.Entities
 
         public virtual List<MissionEntity> Missions { get; set; }
 
-        public virtual UserEntity User { get; set; }
+        //public virtual UserEntity User { get; set; }
 
-        public virtual UserEntity User1 { get; set; }
+        //public virtual UserEntity User1 { get; set; }
     }
 }

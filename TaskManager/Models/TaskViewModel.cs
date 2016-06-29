@@ -23,7 +23,7 @@ namespace TaskManager.Models
 
         public string Description { get; set; }
 
-        public virtual ICollection<MissionEntity> Missions { get; set; }
+        public virtual List<MissionEntity> Missions { get; set; }
 
         public virtual UserEntity User { get; set; }
 

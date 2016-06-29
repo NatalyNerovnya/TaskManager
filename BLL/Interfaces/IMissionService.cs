@@ -9,5 +9,7 @@ namespace BLL.Interfaces
 {
     public interface IMissionService : IService<MissionEntity>
     {
+        void MarkAsDone(MissionEntity entity);
+
     }
 }

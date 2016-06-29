@@ -21,9 +21,9 @@ namespace TaskManager.Models.Mapper
                 FromUserId = bllEntity.FromUserId,
                 ToUserId = bllEntity.ToUserId,
                 IsChecked = bllEntity.IsChecked,
-                Missions = bllEntity.Missions,
-                User = bllEntity.User,
-                User1 = bllEntity.User1
+                Missions = bllEntity.Missions//,
+                //User = bllEntity.User,
+                //User1 = bllEntity.User1
             };
         }
 

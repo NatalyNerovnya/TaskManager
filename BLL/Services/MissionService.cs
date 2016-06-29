@@ -49,31 +49,28 @@ namespace BLL.Services
         {
             var visitor = new MyExpressionVisitor<MissionEntity, DalMission>(Expression.Parameter(typeof(DalMission), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<DalMission, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
-            return missionRepository.GetAllByPredicate(exp2).Select(mission => mission.GetBllEntity());
+            var x = missionRepository.GetAllByPredicate(exp2);
+            return x.Select(mission => mission.GetBllEntity());
         }
 
         public void Create(MissionEntity entity)
         {
-            //if (File.Exists(entity.Path)) return;
             entity.IsDone = false;
             missionRepository.Create(entity.GetDalEntity());
             uow.Commit();
         }
 
-        //public void Restore(MissionEntity entity)
-        //{
-        //    entity.IsDelete = false;
-        //    missionRepository.Update(entity.GetDalEntity());
-        //    uow.Commit();
-        //}
+        public void MarkAsDone(MissionEntity entity)
+        {
+            if (entity.IsDone == false)
+                entity.IsDone = true;
+            else
+                entity.IsDone = false;
+            missionRepository.Update(entity.GetDalEntity());
+            uow.Commit();
 
-        //public void MakeOpen(int id)
-        //{
-        //    var file = missionRepository.GetOneByPredicate(f => f.Id == id);
-        //    file.IsOpen = !(file.IsOpen);
-        //    missionRepository.Update(file);
-        //    uow.Commit();
-        //}
+
+        }
 
         public void Edit(MissionEntity entity)
         {

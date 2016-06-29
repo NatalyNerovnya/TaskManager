@@ -1,35 +1,18 @@
 ﻿@model TaskManager.Models.MissionsViewModel
 
-
 <div class="panel panel-default">
     <div class="panel-body">
         @foreach (var mission in Model.Missions)
         {
-            <div class="checkbox">
-                <label><input type="checkbox" > @mission.Description</label>
-            </div>
+            
+            @Html.CheckBox("IsDone", (bool)mission.IsDone, new { 
+           @name = "IsDone", 
+           @class = mission.Id, 
+           @onclick = @Url.Action("MarkAsDone", "Mission", new{ id=mission.Id }) }) @mission.Description
+            
         }
     </div>
 </div>
 
-@*<script>
-var countChecked = function() {
-  var n = $( "input:checked" ).length;
-  $( "div" ).text( n + (n === 1 ? " is" : " are") + " checked!" );
-};
-countChecked();
-$( "input[type=checkbox]" ).on( "click", countChecked );
-</script>
 
-<script>
-$('#ch').change(function(e) {
-    var txt = e.target.checked ? 'On': 'Off';
-    $('#out').html(txt);
-});
-</script>
 
-<script>
-$("input:checkbox".bind("change click", function () {
-
-});
-</script>*@

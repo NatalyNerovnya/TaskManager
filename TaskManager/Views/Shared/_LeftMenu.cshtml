@@ -1,4 +1,4 @@
-﻿@model TaskManager.Models.TaskViewModel
+﻿@model TaskManager.Models.TasksViewModel
 
 <div id="content">
     <ul id="tabs" class="nav nav-tabs nav-justified" data-tabs="tabs">
@@ -38,16 +38,19 @@
         {
             <div class="tab-pane" id="done">
 
-                @Html.Partial("_Box")
+                <div class="well">
+                    <strong>Checked Tasks : </strong>  @*@Model.CountCheckedTasks*@
+                </div>
+                
+
+                @Html.Partial("_CheckedTasks")
             </div>
 
             <div class="tab-pane" id="tasks">
                 <div class="well">
-                    <strong>Total Files = </strong> @*@Model.CountFiles*@
+                    <strong>Total Tasks : </strong> @*@Model.CountTasks*@
                 </div>
-                <div class="well">
-                    <strong>Total Size =  </strong>  @*@Model.TotalSize / 10000*@
-                </div>
+                @*@Html.Partial("_Box")*@
             </div>
         }
     </div>

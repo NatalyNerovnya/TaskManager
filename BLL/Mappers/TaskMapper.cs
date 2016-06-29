@@ -23,8 +23,8 @@ namespace BLL.Mappers
                 DateCreation = dalEntity.DateCreation,
                 Name = dalEntity.Name,
                 Description = dalEntity.Description,
-                User = dalEntity.User.GetBllEntity(),
-                User1 = dalEntity.User1.GetBllEntity(),
+                //User = dalEntity.User.GetBllEntity(),
+                //User1 = dalEntity.User1.GetBllEntity(),
                 Missions = dalEntity.Missions != null
                 ? dalEntity.Missions.Select(m => m.GetBllEntity()).ToList()
                 : null               
@@ -42,9 +42,12 @@ namespace BLL.Mappers
                 DateCreation = bllEntity.DateCreation,
                 Name = bllEntity.Name,
                 Description = bllEntity.Description,
-                User = bllEntity.User.GetDalEntity(),
-                User1 = bllEntity.User1.GetDalEntity(),
-                Missions = bllEntity.Missions.Select(m => m.GetDalEntity()).ToList(),  
+                //User = bllEntity.User.GetDalEntity(),
+                //User1 = bllEntity.User1.GetDalEntity(),
+                //Missions = bllEntity.Missions.Select(m => m.GetDalEntity()).ToList(),  
+                Missions = bllEntity.Missions != null
+                ? bllEntity.Missions.Select(m => m.GetDalEntity()).ToList()
+                : null
             };
         }
 

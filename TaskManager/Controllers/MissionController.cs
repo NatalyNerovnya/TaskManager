@@ -46,6 +46,7 @@ namespace TaskManager.Controllers
         public ActionResult MarkAsDone(int id)
         {
             var mission = missionService.GetById(id);
+
             if (mission != null)
                 missionService.MarkAsDone(mission);
             int taskId = mission.TaskId;

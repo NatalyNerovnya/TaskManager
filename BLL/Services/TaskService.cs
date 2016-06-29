@@ -52,7 +52,6 @@ namespace BLL.Services
 
         public void Create(TaskEntity entity)
         {
-            //if (File.Exists(entity.Path)) return;
             entity.IsChecked = false;
             entity.DateCreation = DateTime.Now;
             taskRepository.Create(entity.GetDalEntity());
@@ -82,8 +81,6 @@ namespace BLL.Services
 
         public void Delete(TaskEntity entity)
         {
-            //if (File.Exists(entity.Path))
-            //    File.Delete(entity.Path);
             taskRepository.Delete(entity.GetDalEntity());
             uow.Commit();
         }
