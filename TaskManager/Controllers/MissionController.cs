@@ -28,20 +28,21 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(MissionViewModel model)
         {
-            //missionService.Create(new MissionEntity
-            //{
-            //    Id = model.Id,
-            //    TaskId = model.TaskId,
-            //    Name = model.Name,
-            //    IsDone = false,
-            //    Description = model.Description
-            //});
-
+            var taskId = (int)Session["taskId"];
+            missionService.Create(new MissionEntity
+            {
+                Id = model.Id,
+                TaskId = taskId,
+                Name = model.Name,
+                IsDone = false,
+                Description = model.Description
+            });
+            var mission = missionService.GetAllByPredicate(m => m.TaskId == model.TaskId);
             //return PartialView("_MissionMenu");
-            //return PartialView("_MissionView");
+           // return PartialView("_MissionView", mission);
+            
             return RedirectToAction("ShowMissions",new {id = model.TaskId});
         }
 

@@ -2,7 +2,7 @@
 
 @if(Model != null)
 {
-    @foreach(var point in Model.Missions)
+    foreach(var point in Model.Missions)
     {
         @Html.CheckBox(point.Description, point.IsDone)    
     }

@@ -20,10 +20,19 @@
             <div class="panel-body">
                 @{
     int n = ViewBag.AllUsers.Count;
-    string[] allUsers = new string[n];
-    for (int i = 0; i < n; i++)
+    string[] allUsers = new string[n-1];
+
+    for (int i = 0, j =0; j < n; i++, j++)
     {
-        allUsers[i] = ViewBag.AllUsers[i].Login;
+        if (ViewBag.AllUsers[j].Login != User.Identity.Name)
+        {
+            allUsers[i] = ViewBag.AllUsers[j].Login;
+            
+        }
+        else
+        {
+            i--;
+        }
     }
 
                 }
@@ -46,7 +55,7 @@
                         <div class="form-group">
                             @Html.Label("To user: ")
                             @Html.DropDownList("toUser", new SelectList(allUsers))
-
+                            
                         </div>
 
 

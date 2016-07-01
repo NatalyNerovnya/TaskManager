@@ -82,7 +82,9 @@ namespace TaskManager.Controllers
             var thisUser = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);
             task.FromUserId = thisUser.Id;
             task.ToUserId = userId.Id;
-            //taskService.Create(new TaskEntity{
+            Session["taskId"] = task.Id;
+            //taskService.Create(new TaskEntity
+            //{
             //    Id = task.Id,
             //    Name = task.Name,
             //    Missions = task.Missions,
@@ -94,7 +96,9 @@ namespace TaskManager.Controllers
             //    //User = task.User,
             //    //User1 = task.User1   
             //});
+            Session["taskId"] = task.Id;
             //Where should I redirect to?
+            
             return PartialView("_MissionMenu");
             //return RedirectToAction("Create","Mission");
             
