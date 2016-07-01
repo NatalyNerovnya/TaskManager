@@ -1,6 +1,7 @@
 ﻿using BLL.Entities;
 using BLL.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,43 +21,52 @@ namespace TaskManager.Controllers
         {
             this.taskService = taskService;
             this.userService = userService;
+            
+                      
         }
 
         public ActionResult Index(string sortOrder)
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    var user = taskService.GetOneByPredicate(u => u. == User.Identity.Name);
-            //    //var model = taskService.GetAllByPredicate(f => f.Id == user.Id).ToList();
-            //    //Task model = null;
-            //    //using (TaskManagerEntityModel db = new TaskManagerEntityModel())
-            //    //{
-            //    //    model = db.Tasks.FirstOrDefault(u => u.Id == user.Id);
-            //    //}
-            //    var viewModel = model.GetTasksViewModel();
-            //    Session["tasks"] = model.Where(f => f.IsChecked != true);
-            //    ViewBag.TaskAction = true;
-            //    return View(viewModel);
-            //}
+            if (User.Identity.IsAuthenticated)
+            {
+                                
+                var user = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);
+                var tasks = taskService.GetAllByPredicate(t=>t.FromUserId == user.Id).ToList().GetTasksViewModel();
+                ViewBag.Tasks = tasks;
+                ViewBag.AllUsers = userService.GetAllEntities();
+                //var model = taskService.GetAllByPredicate(f => f.Id == user.Id).ToList();
+                //Task model = null;
+                //using (TaskManagerEntityModel db = new TaskManagerEntityModel())
+                //{
+                //    model = db.Tasks.FirstOrDefault(u => u.Id == user.Id);
+                //}
+                //var viewModel = model.GetTasksViewModel();
+                //Session["tasks"] = model.Where(f => f.IsChecked != true);
+                //ViewBag.TaskAction = true;
+                //return View(viewModel);
+            }
             return View("StartView");
         }
 
-        [HttpPost]
-        public ActionResult ShowUserTasks(int id)
+        
+        public ActionResult ShowUserTasks()
         {
-            var tasks = taskService.GetAllByPredicate(t => t.ToUserId == id).ToList().GetTasksViewModel();
-            Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == id);
-            ViewBag.TaskAction = true;
+            var user = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);  
+            var tasks = taskService.GetAllByPredicate(t => t.ToUserId == user.Id).ToList().GetTasksViewModel();
+            Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == user.Id);
+            //ViewBag.TaskAction = true;
+            ViewBag.User = user;
             return PartialView("_TasksView", tasks);
         }
 
-        [HttpPost]
-        public ActionResult ShowFromUserTasks(int id)
+        
+        public ActionResult ShowFromUserTasks()
         {
-            var tasks = taskService.GetAllByPredicate(t => t.FromUserId == id).ToList().GetTasksViewModel();
-            Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == id);
-            ViewBag.TaskAction = true;
-            
+            var user = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);
+            var tasks = taskService.GetAllByPredicate(t => t.FromUserId == user.Id).ToList().GetTasksViewModel();
+            Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == user.Id);
+            //ViewBag.TaskAction = true;
+            ViewBag.User = user;
             return PartialView("_TasksView", tasks);
         }
 
@@ -66,24 +76,27 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTask(TaskViewModel task)
+        public ActionResult CreateTask(TaskViewModel task, string toUser)
         {
-            taskService.Create(new TaskEntity{
-                Id = task.Id,
-                Name = task.Name,
-                Missions = task.Missions,
-                IsChecked = task.IsChecked,
-                DateCreation = task.DateCreation,
-                Description = task.Description,
-                FromUserId = task.FromUserId,
-                ToUserId = task.ToUserId//,
-                //User = task.User,
-                //User1 = task.User1   
-            });
-           
+            var userId = userService.GetOneByPredicate(u=>u.Login == toUser);
+            var thisUser = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);
+            task.FromUserId = thisUser.Id;
+            task.ToUserId = userId.Id;
+            //taskService.Create(new TaskEntity{
+            //    Id = task.Id,
+            //    Name = task.Name,
+            //    Missions = task.Missions,
+            //    IsChecked = task.IsChecked,
+            //    DateCreation = task.DateCreation,
+            //    Description = task.Description,
+            //    FromUserId = task.FromUserId,
+            //    ToUserId = task.ToUserId//,
+            //    //User = task.User,
+            //    //User1 = task.User1   
+            //});
             //Where should I redirect to?
-            return View(task);
-            //return RedirectToAction("Index");
+            return PartialView("_MissionMenu");
+            //return RedirectToAction("Create","Mission");
             
         }
         
@@ -192,16 +205,16 @@ namespace TaskManager.Controllers
         ////    return RedirectToAction("Index");
         ////}
 
-        public ActionResult Sort(string sortOrder)
-        {
-        //    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
-        //    ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
+        //public ActionResult Sort(string sortOrder)
+        //{
+        ////    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
+        ////    ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
 
-            var tasks = Session["tasks"];
-            var model = taskService.SortTasks((tasks as IEnumerable<TaskEntity>), sortOrder).ToList().GetTasksViewModel();
-        //    ViewBag.FileAction = false;
-            return PartialView("_TasksView", model);
-        }
+        //    var tasks = Session["tasks"];
+        //    var model = taskService.SortTasks((tasks as IEnumerable<TaskEntity>), sortOrder).ToList().GetTasksViewModel();
+        ////    ViewBag.FileAction = false;
+        //    return PartialView("_TasksView", model);
+        //}
 
 
 

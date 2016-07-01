@@ -214,6 +214,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -246,14 +248,14 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
-    <Content Include="Views\Shared\_TaskMenu.cshtml" />
     <Content Include="Views\Shared\_Logout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\StartView.cshtml" />
     <Content Include="Views\Shared\_TasksView.cshtml" />
     <Content Include="Views\Mission\_MissionsView.cshtml" />
-    <Content Include="Views\Shared\_CheckedTasks.cshtml" />
     <Content Include="Views\Shared\_MissionMenu.cshtml" />
+    <Content Include="Views\Shared\_TaskMenu.cshtml" />
+    <Content Include="Views\Shared\_MissionView.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

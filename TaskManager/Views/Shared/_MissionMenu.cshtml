@@ -1,31 +1,60 @@
 ﻿@model TaskManager.Models.MissionViewModel
-
+@{
+               var options = new AjaxOptions
+               {
+                   UpdateTargetId = "missions",
+                   Url = Url.Action("Create", "Mission"),
+                   LoadingElementId="loadingIndicator"
+                };
+}
+<div id="contentBox">
 @if (User.Identity.IsAuthenticated)
 {
-    <div class=" col-md-3 ">
+    <div class=" col-md-5 ">
         <div class="panel">
             <div class="panel-heading text-center ">
                 <h3>Add point</h3>
             </div>
+
             <div class="panel-body">
-                @using (Html.BeginForm("CreateTask", "Home", FormMethod.Post@*, new { enctype = "multipart/form-data" }*@))
+                @using (Ajax.BeginForm(options))
                 {
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button type="submit" class="btn btn-success btn-lg btn-block">Add point</button>
-                        </div>
-                        
-                    </div>
                     <fieldset>
-                         <div class="form-group">
-                            @Html.LabelFor(m => m.Description)
-                            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                        <div class="form-group">
+                            @Html.Label("Description")
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
                         </div>
-                        
+                        <div class="row">
+                            <div class="col-md-11">
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Add point</button><img id="loadingIndicator" style="display:none;" src="@Url.Content("~/Content/Images/Preloader_2/Preloader_2.gif")"/>
+                            </div>
+
+                        </div>
                     </fieldset>
                 }
+
+
+                </div>
+
             </div>
+        </div>
+
+
+    <div class=" col-md-7 ">
+        <div class="panel">
+            <div class="panel-heading text-center ">
+                <h3>Points</h3>
+            </div>
+
+            <div class="panel-body">
+                <div id="missions">
+                    </div>
+
+
+                </div>
 
         </div>
     </div>
 }
+</div>
+ 

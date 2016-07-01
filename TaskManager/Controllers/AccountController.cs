@@ -65,9 +65,14 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
+            var user = _userService.GetOneByPredicate(u => u.Login == model.UserName);
+            if(user != null)
+            {
+                ModelState.AddModelError("", "Error! Try another Login");
+            }
             if (ModelState.IsValid)
             {
-                var user = _userService.GetOneByPredicate(u => u.Email == model.UserEmail && u.Login == model.UserName);
+                 user = _userService.GetOneByPredicate(u => u.Email == model.UserEmail && u.Login == model.UserName);
                 if (user == null)
                 {
 

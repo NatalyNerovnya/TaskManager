@@ -13,27 +13,43 @@ namespace TaskManager.Controllers
     public class MissionController : Controller
     {
         private IMissionService missionService;
+        private ITaskService taskService;
 
-        [HttpGet]
+        //public MissionController(ITaskService taskService, IMissionService missionService)
+        //{
+        //    this.taskService = taskService;
+        //    this.missionService = missionService;
+        //}
+
+        
         public ActionResult Create()
         {
-            return View();
+            return View("_MissionMenu");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionViewModel model)
         {
-            missionService.Create(new MissionEntity
-            {
-                Id = model.Id,
-                TaskId = model.TaskId,
-                Name = model.Name,
-                IsDone = false,
-                Description = model.Description
-            });
+            //missionService.Create(new MissionEntity
+            //{
+            //    Id = model.Id,
+            //    TaskId = model.TaskId,
+            //    Name = model.Name,
+            //    IsDone = false,
+            //    Description = model.Description
+            //});
 
-            return RedirectToAction("Index");
+            //return PartialView("_MissionMenu");
+            //return PartialView("_MissionView");
+            return RedirectToAction("ShowMissions",new {id = model.TaskId});
+        }
+
+        public ActionResult ShowMissions(int id)
+        {
+            var task = taskService.GetById(id);
+            var mission = missionService.GetAllByPredicate(m=>m.TaskId == task.Id).ToList();
+            return PartialView("_MissionView", mission);
         }
 
         [HttpGet]

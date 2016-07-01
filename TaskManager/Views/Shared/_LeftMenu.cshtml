@@ -1,4 +1,4 @@
-﻿@model TaskManager.Models.TasksViewModel
+﻿
 
 <div id="content">
     <ul id="tabs" class="nav nav-tabs nav-justified" data-tabs="tabs">
@@ -10,22 +10,23 @@
         @if (User.Identity.IsAuthenticated)
         {
             <li>
-                <a data-toggle="tab" href="#done">
-                    <span class="glyphicon glyphicon-ok"></span>
+                <a data-toggle="tab" href="#add" >
+                    <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </li>
 
             <li>
-                <a data-toggle="tab" href="#tasks">
+                <a data-toggle="tab" href="#tasks" >
                     <span class="glyphicon glyphicon-th-list"></span>
                 </a>
             </li>
 
         }
     </ul>
+
     <div id="my-tab-content" class="tab-content">
         <div class="tab-pane active" id="user">
-            @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            @if (!User.Identity.IsAuthenticated)
             {
                 @Html.Partial("_Login");
             }
@@ -34,23 +35,23 @@
                 @Html.Partial("_Logout");
             }
         </div>
-        @if (HttpContext.Current.User.Identity.IsAuthenticated)
+        @if (User.Identity.IsAuthenticated)
         {
-            <div class="tab-pane" id="done">
+            <div class="tab-pane" id="add">
 
-                <div class="well">
-                    <strong>Checked Tasks : </strong>  @*@Model.CountCheckedTasks*@
-                </div>
+                
                 
 
-                @Html.Partial("_CheckedTasks")
+                
             </div>
 
-            <div class="tab-pane" id="tasks">
+            <div class="tab-pane active" id="tasks">
                 <div class="well">
-                    <strong>Total Tasks : </strong> @*@Model.CountTasks*@
+                    <strong>Total Tasks : </strong> @ViewBag.Tasks.CountTasks<br>
+                    <strong>Checked Tasks : </strong>  @ViewBag.Tasks.CountCheckedTasks<br><br>
+                    <button type="button" class="btn btn-block btn-primary" onclick="location.href='@Url.Action("ShowFromUserTasks", "Home")'">Show give away tasks</button><br>
+                    <button type="button" class="btn btn-block btn-primary" onclick="location.href='@Url.Action("ShowUserTasks", "Home")'">Show my tasks</button><br>
                 </div>
-                @*@Html.Partial("_Box")*@
             </div>
         }
     </div>
