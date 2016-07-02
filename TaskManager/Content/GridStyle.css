@@ -1,0 +1,30 @@
+﻿.grid{
+    background-color: #f2f2f2;
+    border-color:gray;
+    border-radius:4px;
+}
+
+.header{
+    background-color: lightgrey;
+    font-weight: 600;
+    text-align:center;
+    color: black;
+}
+
+.row{
+    background-color: #ccffcc;
+    text-align:center;
+    color:#666666;
+}
+
+.alt-row{
+    background-color: #99ff99;
+    text-align:center;
+    color:#666666;
+}
+
+.footer{
+    background-color: lightgrey;
+    font-weight: 600;
+    text-align:center;
+}

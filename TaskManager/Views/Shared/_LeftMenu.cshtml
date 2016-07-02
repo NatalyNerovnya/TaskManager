@@ -36,8 +36,11 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            <div class="tab-pane" id="add">
-
+            <div class="tab-pane active" id="add">
+                <div class="well">
+                    @*<br><br><br><br>
+                    <button type="button" class="btn btn-block btn-primary" onclick="location.href='@Url.Action("ShowUserTasks", "Home")'">Show my tasks</button><br>*@
+                </div>
                 
                 
 

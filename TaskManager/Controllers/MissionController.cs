@@ -15,11 +15,11 @@ namespace TaskManager.Controllers
         private IMissionService missionService;
         private ITaskService taskService;
 
-        //public MissionController(ITaskService taskService, IMissionService missionService)
-        //{
-        //    this.taskService = taskService;
-        //    this.missionService = missionService;
-        //}
+        public MissionController(ITaskService taskService, IMissionService missionService)
+        {
+            this.taskService = taskService;
+            this.missionService = missionService;
+        }
 
         
         public ActionResult Create()
@@ -43,20 +43,14 @@ namespace TaskManager.Controllers
             //return PartialView("_MissionMenu");
            // return PartialView("_MissionView", mission);
             
-            return RedirectToAction("ShowMissions",new {id = model.TaskId});
+            return RedirectToAction("ShowMission",new {id = model.TaskId});
         }
 
-        public ActionResult ShowMissions(int id)
+        public ActionResult ShowMission(int id)
         {
-            var task = taskService.GetById(id);
-            var mission = missionService.GetAllByPredicate(m=>m.TaskId == task.Id).ToList();
+            //var task = taskService.GetById(id);
+            var mission = missionService.GetAllByPredicate(m=>m.TaskId == id).ToList();
             return PartialView("_MissionView", mission);
-        }
-
-        [HttpGet]
-        public ActionResult MarkAsDone()
-        {
-            return View();
         }
 
         [HttpPost]

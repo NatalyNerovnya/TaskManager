@@ -56,7 +56,7 @@ namespace TaskManager.Controllers
             Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == user.Id);
             //ViewBag.TaskAction = true;
             ViewBag.User = user;
-            return PartialView("_TasksView", tasks);
+            return PartialView("_TasksView", tasks.Tasks);
         }
 
         
@@ -67,7 +67,7 @@ namespace TaskManager.Controllers
             Session["tasks"] = taskService.GetAllByPredicate(t => t.Id == user.Id);
             //ViewBag.TaskAction = true;
             ViewBag.User = user;
-            return PartialView("_TasksView", tasks);
+            return PartialView("_TasksView", tasks.Tasks);
         }
 
         public ActionResult CreateTask()

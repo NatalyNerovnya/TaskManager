@@ -1,42 +1,41 @@
-﻿@model TaskManager.Models.TasksViewModel
+﻿@model IEnumerable<TaskManager.Models.TaskViewModel>
 
+@{
+    var grid = new WebGrid(Model, rowsPerPage: 4);
+
+}
+@section styles {
+<a href="~/Content/GridStyle.css" rel="stylesheet"/>
+}
 
 @if (User.Identity.IsAuthenticated)
 {
-    <div class=" col-md-11 ">
-        <div class="panel">
-            <div class="panel-heading text-center ">
+    <div class=" col-md-6 ">
+        <div>
                 <h3>@User.Identity.Name 's tasks</h3>
             </div>
-            <div class="panel-body">
-                <div class="list-group">
-                    @foreach (var task in Model.Tasks)
-                    {
-                        var allMiss = task.Missions.Select(m => m.TaskId == task.Id).Count();
-                        var allMissions = allMiss == 0 ? 1 : allMiss;
-                        var doneMissions = task.Missions.Select(m => m.TaskId == task.Id && m.IsDone == true).Count();
-                        var precentage = doneMissions * 100 / allMissions;
-                        <a href="#" class="list-group-item">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-                                    <p> @precentage %
-                                </div>
-                            </div>
-                            <h4 class="list-group-item-heading">@task.Name</h4>
-                            <p class="list-group-item-text">@task.Description</p>
-                        </a>
-
-                    }
-
-                </div>
+            <div>
+                 @grid.GetHtml(
+                      columns:grid.Columns(
+                      grid.Column(columnName: "IsChecked", header: " ", format: @<input type="checkbox">),
+                      grid.Column(columnName: "Name"),
+                      grid.Column(columnName: "Description", style:"row"),
+                        grid.Column(columnName: "ToUserId", header: "To user"),
+                        grid.Column(columnName: "FromUserId", header: "From user"),
+                        grid.Column(columnName: "DateCreation", header: "Creation date"),
+                        grid.Column(header:"", format:@<a href="@Url.Action("ShowMission", "Mission", new { id = item.Id })">Open</a>)),
+                      fillEmptyRows: true,
+                      nextText:"Next",
+                      previousText:"Previos",
+                      
+                      
+                      tableStyle: "grid",
+                      headerStyle: "header",
+                      footerStyle: "footer",
+                      alternatingRowStyle: "alt-row",
+                      rowStyle: "row")
             </div>
         </div>
-    </div>
 
-}
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/jquery.validate.bootstrap.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.min.js"></script>
 }

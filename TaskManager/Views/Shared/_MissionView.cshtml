@@ -1,9 +1,34 @@
-﻿@model TaskManager.Models.MissionsViewModel
+﻿@model IEnumerable<TaskManager.Models.MissionViewModel>
 
-@if(Model != null)
+@{
+    var grid = new WebGrid(Model, rowsPerPage: 4);
+
+}
+@section styles {
+    <a href="~/Content/GridStyle.css" rel="stylesheet" />
+}
+
+@if (User.Identity.IsAuthenticated)
 {
-    foreach(var point in Model.Missions)
-    {
-        @Html.CheckBox(point.Description, point.IsDone)    
-    }
+    <div class=" col-md-6 ">
+        <div>
+            @grid.GetHtml(
+                      columns: grid.Columns(
+                      grid.Column(columnName: "IsDone", header: " ", format: @<input type="checkbox">),
+                      grid.Column(columnName: "Name"),
+                      grid.Column(columnName: "Description", style:"row")),
+              fillEmptyRows: true,
+              nextText: "Next",
+              previousText: "Previos",
+
+
+              tableStyle: "grid",
+              headerStyle: "header",
+              footerStyle: "footer",
+              alternatingRowStyle: "alt-row",
+              rowStyle: "row")
+        </div>
+    </div>
+
+
 }
