@@ -2,6 +2,7 @@
 @{
                var options = new AjaxOptions
                {
+                   InsertionMode = InsertionMode.Replace,
                    UpdateTargetId = "missions",
                    Url = Url.Action("Create", "Mission"),
                    LoadingElementId="loadingIndicator"

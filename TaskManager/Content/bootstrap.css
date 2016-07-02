@@ -5302,6 +5302,7 @@ button.list-group-item {
 .list-group-item.disabled:focus .list-group-item-text {
   color: #777;
 }
+
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
@@ -6547,6 +6548,15 @@ button.close {
 .affix {
   position: fixed;
 }
+
+
+
+
+
+
+
+
+
 @-ms-viewport {
   width: device-width;
 }
@@ -6758,3 +6768,6 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+
+

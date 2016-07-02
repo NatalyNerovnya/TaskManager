@@ -60,11 +60,9 @@ namespace TaskManager.Controllers
 
             if (mission != null)
                 missionService.MarkAsDone(mission);
-            int taskId = mission.TaskId;
-            var tasks = missionService.GetAllByPredicate(m => m.TaskId == taskId && m.IsDone == false).ToList().GetMissionsViewModel();
 
-            ViewBag.TaskAction = true;
-            return PartialView("_MissionsView", tasks);
+            var missions = missionService.GetAllByPredicate(m=>m.Id == id).ToList();
+            return PartialView("_MissionView", missions);
         }
 
     }

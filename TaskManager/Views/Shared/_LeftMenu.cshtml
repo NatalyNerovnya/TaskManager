@@ -36,10 +36,15 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            <div class="tab-pane active" id="add">
+            <div class="tab-pane" id="add">
                 <div class="well">
-                    @*<br><br><br><br>
-                    <button type="button" class="btn btn-block btn-primary" onclick="location.href='@Url.Action("ShowUserTasks", "Home")'">Show my tasks</button><br>*@
+                   @Ajax.ActionLink("Create task", "Create", "Home", new AjaxOptions
+                {
+
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "main",
+
+                }, new { @type = "button", @class = "btn btn-block btn-primary" })
                 </div>
                 
                 
@@ -47,13 +52,28 @@
                 
             </div>
 
-            <div class="tab-pane active" id="tasks">
+            <div class="tab-pane" id="tasks">
                 <div class="well">
                     <strong>Total Tasks : </strong> @ViewBag.Tasks.CountTasks<br>
                     <strong>Checked Tasks : </strong>  @ViewBag.Tasks.CountCheckedTasks<br><br>
+
+                    @Ajax.ActionLink("Show give away tasks", "ShowFromUserTasks", "Home", new AjaxOptions
+                {
                     
-                    <button type="button" class="btn btn-block btn-primary" onclick="location.href='@Url.Action("ShowFromUserTasks", "Home")'">Show give away tasks</button><br>
-                    <button type="button" class="btn btn-block btn-primary" onclick="location.href='@Url.Action("ShowUserTasks", "Home")'">Show my tasks</button><br>
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "main",
+
+                }, new { @type = "button", @class = "btn btn-block btn-primary" }) <br>
+
+                    @Ajax.ActionLink("Show my tasks", "ShowUserTasks", "Home", new AjaxOptions
+                {
+
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "main",
+
+                }, new { @type = "button", @class = "btn btn-block btn-primary" })
+
+                   
                 </div>
             </div>
         }

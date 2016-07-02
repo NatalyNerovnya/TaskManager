@@ -69,10 +69,10 @@ namespace TaskManager.Controllers
             ViewBag.User = user;
             return PartialView("_TasksView", tasks.Tasks);
         }
-
+        [HttpGet]
         public ActionResult CreateTask()
         {
-            return View();
+            return PartialView("_TaskMenu");
         }
 
         [HttpPost]
