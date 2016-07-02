@@ -1,41 +1,46 @@
 ﻿@model IEnumerable<TaskManager.Models.TaskViewModel>
 
 @{
-    var grid = new WebGrid(Model, rowsPerPage: 4);
+    var grid = new WebGrid(Model, rowsPerPage: 4, ajaxUpdateContainerId: "gridContent");
 
-}
-@section styles {
-<a href="~/Content/GridStyle.css" rel="stylesheet"/>
 }
 
 @if (User.Identity.IsAuthenticated)
 {
-    <div class=" col-md-12">
+    <div class=" col-md-7">
         <div>
-                <h3>@User.Identity.Name 's tasks</h3>
-            </div>
-            <div>
-                 @grid.GetHtml(
-                      columns:grid.Columns(
+            <h3>@User.Identity.Name 's tasks</h3>
+        </div>
+        <div id="gridContent">
+            @grid.GetHtml(
+                      columns: grid.Columns(
                       grid.Column(columnName: "IsChecked", header: " ", format: @<input type="checkbox">),
                       grid.Column(columnName: "Name"),
                       grid.Column(columnName: "Description", style:"row"),
                         grid.Column(columnName: "ToUserId", header: "To user"),
                         grid.Column(columnName: "FromUserId", header: "From user"),
                         grid.Column(columnName: "DateCreation", header: "Creation date"),
-                        grid.Column(header:"", format:@<a href="@Url.Action("ShowMission", "Mission", new { id = item.Id })">Open</a>)),
-                      fillEmptyRows: true,
-                      nextText:"Next",
-                      previousText:"Previos",
-                      
-                      
-                      tableStyle: "grid",
-                      headerStyle: "header",
-                      footerStyle: "footer",
-                      alternatingRowStyle: "alt-row",
-                      rowStyle: "row")
-            </div>
+                        grid.Column(header:"", format:@<text> @Ajax.ActionLink("Open", "ShowMission", "Mission", new { id = @item.Id }, new AjaxOptions
+                                                    {
+                                                        InsertionMode = InsertionMode.Replace,
+                                                        UpdateTargetId = "miss",
+
+                                                    }, new { @type = "button", @class = "btn btn-block btn-primary" }
+                                                    )</text>)),
+                                fillEmptyRows: true,
+                                nextText: "Next",
+                                previousText: "Previos",
+
+                                tableStyle: "grid",
+                                headerStyle: "headerGrid",
+                                footerStyle: "footerGrid",
+                                alternatingRowStyle: "alt-rowGrid",
+                                rowStyle: "rowGrid")
         </div>
 
+    </div>
+    <div class=" col-md-5">
+        <div id="miss"></div>
+    </div>
 
 }

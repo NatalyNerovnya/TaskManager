@@ -3,7 +3,8 @@
                var options = new AjaxOptions
                {
                    InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "missions",
+                   HttpMethod="Post",
+                   UpdateTargetId = "mission",
                    Url = Url.Action("Create", "Mission"),
                    LoadingElementId="loadingIndicator"
                 };
@@ -27,7 +28,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-11">
-                                <button type="submit" class="btn btn-success btn-lg btn-block">Add point</button><img id="loadingIndicator" style="display:none;" src="@Url.Content("~/Content/Images/Preloader_2/Preloader_2.gif")"/>
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Add point</button><img id="loadingIndicator" style="display:none" src="@Url.Content("~/Content/Images/Preloader_2/Preloader_2.gif")"/>
                             </div>
 
                         </div>
@@ -45,6 +46,13 @@
         <div class="panel">
             <div class="panel-heading text-center ">
                 <h3>Points</h3>
+                
+                @Ajax.ActionLink("Finish", "ShowMission", "Mission"/*,new {id = }*/, new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "main",
+
+                }, new { @type = "button", @class = "btn btn-success btn-lg btn-block" }) <br>
             </div>
 
             <div class="panel-body">

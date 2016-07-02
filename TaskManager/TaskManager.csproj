@@ -269,7 +269,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\StartView.cshtml" />
     <Content Include="Views\Shared\_TasksView.cshtml" />
-    <Content Include="Views\Mission\_MissionsView.cshtml" />
     <Content Include="Views\Shared\_MissionMenu.cshtml" />
     <Content Include="Views\Shared\_TaskMenu.cshtml" />
     <Content Include="Views\Shared\_MissionView.cshtml" />

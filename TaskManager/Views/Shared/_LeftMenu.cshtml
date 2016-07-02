@@ -37,10 +37,12 @@
         @if (User.Identity.IsAuthenticated)
         {
             <div class="tab-pane" id="add">
-                <div class="well">
-                   @Ajax.ActionLink("Create task", "Create", "Home", new AjaxOptions
-                {
 
+                <div class="well">
+                    <br><br><br><br>
+                   @Ajax.ActionLink("Create task", "CreateTask", "Home", new AjaxOptions
+                {
+                    HttpMethod = "Get",
                     InsertionMode = InsertionMode.Replace,
                     UpdateTargetId = "main",
 

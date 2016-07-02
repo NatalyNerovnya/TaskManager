@@ -34,16 +34,6 @@ namespace TaskManager.Controllers
                 var tasks = taskService.GetAllByPredicate(t=>t.FromUserId == user.Id).ToList().GetTasksViewModel();
                 ViewBag.Tasks = tasks;
                 ViewBag.AllUsers = userService.GetAllEntities();
-                //var model = taskService.GetAllByPredicate(f => f.Id == user.Id).ToList();
-                //Task model = null;
-                //using (TaskManagerEntityModel db = new TaskManagerEntityModel())
-                //{
-                //    model = db.Tasks.FirstOrDefault(u => u.Id == user.Id);
-                //}
-                //var viewModel = model.GetTasksViewModel();
-                //Session["tasks"] = model.Where(f => f.IsChecked != true);
-                //ViewBag.TaskAction = true;
-                //return View(viewModel);
             }
             return View("StartView");
         }
@@ -72,6 +62,7 @@ namespace TaskManager.Controllers
         [HttpGet]
         public ActionResult CreateTask()
         {
+            ViewBag.AllUsers = userService.GetAllEntities();
             return PartialView("_TaskMenu");
         }
 
@@ -83,24 +74,23 @@ namespace TaskManager.Controllers
             task.FromUserId = thisUser.Id;
             task.ToUserId = userId.Id;
             Session["taskId"] = task.Id;
-            //taskService.Create(new TaskEntity
-            //{
-            //    Id = task.Id,
-            //    Name = task.Name,
-            //    Missions = task.Missions,
-            //    IsChecked = task.IsChecked,
-            //    DateCreation = task.DateCreation,
-            //    Description = task.Description,
-            //    FromUserId = task.FromUserId,
-            //    ToUserId = task.ToUserId//,
-            //    //User = task.User,
-            //    //User1 = task.User1   
-            //});
+            taskService.Create(new TaskEntity
+            {
+                Id = task.Id,
+                Name = task.Name,
+                Missions = task.Missions,
+                IsChecked = task.IsChecked,
+                DateCreation = task.DateCreation,
+                Description = task.Description,
+                FromUserId = task.FromUserId,
+                ToUserId = task.ToUserId//,
+                //User = task.User,
+                //User1 = task.User1   
+            });
             Session["taskId"] = task.Id;
-            //Where should I redirect to?
             
             return PartialView("_MissionMenu");
-            //return RedirectToAction("Create","Mission");
+
             
         }
         
