@@ -46,7 +46,8 @@ namespace DAL.Concrete
         {
             var visitor = new MyExpressionVisitor<DalMission, Mission>(Expression.Parameter(typeof(Mission), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<Mission, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
-            return context.Set<Mission>().Where(exp2).Select(mis => mis.GetDalEntity());
+            var x = context.Set<Mission>().Where(exp2).ToList();
+            return x.Select(mis => mis.GetDalEntity());
         }
 
         public void Create(DalMission dalMission)

@@ -31,11 +31,11 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Create(MissionViewModel model)
         {
-            var taskId = (int)Session["taskId"];
+            
             missionService.Create(new MissionEntity
             {
                 Id = model.Id,
-                TaskId = taskId,
+                TaskId = model.TaskId,
                 Name = model.Name,
                 IsDone = false,
                 Description = model.Description

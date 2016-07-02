@@ -73,10 +73,10 @@ namespace TaskManager.Controllers
             var thisUser = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);
             task.FromUserId = thisUser.Id;
             task.ToUserId = userId.Id;
-            Session["taskId"] = task.Id;
-            taskService.Create(new TaskEntity
+            
+            int id = taskService.CreateTask(new TaskEntity
             {
-                Id = task.Id,
+                //Id = task.Id,
                 Name = task.Name,
                 Missions = task.Missions,
                 IsChecked = task.IsChecked,
@@ -87,9 +87,10 @@ namespace TaskManager.Controllers
                 //User = task.User,
                 //User1 = task.User1   
             });
-            Session["taskId"] = task.Id;
             
-            return PartialView("_MissionMenu");
+            var model = new MissionViewModel(){TaskId = id};
+            
+            return PartialView("_MissionMenu", model);
 
             
         }

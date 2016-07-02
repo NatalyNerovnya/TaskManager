@@ -9,5 +9,6 @@ namespace DAL.Interfaces
 {
     public interface ITaskRepository : IRepository<DalTask>
     {
+        int CreateTask(DalTask e);
     }
 }

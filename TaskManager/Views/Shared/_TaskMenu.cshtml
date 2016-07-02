@@ -5,7 +5,6 @@
     {
         InsertionMode = InsertionMode.Replace,
         UpdateTargetId = "main",
-        Url = Url.Action("CreateTask", "Home"),
         LoadingElementId = "loadingIndicator"
     };
 }
@@ -31,7 +30,7 @@
 
                 }
 
-                @using (Ajax.BeginForm(options))
+                @using (Ajax.BeginForm("CreateTask", "Home",options, new { id="myForm"}))
                 {
 
 

@@ -27,7 +27,7 @@ namespace DAL.Concrete
             {
                 try
                 {
-                    // doing here my logic
+                    
                     Context.SaveChanges();
                 }
                 catch (DbEntityValidationException dbEx)

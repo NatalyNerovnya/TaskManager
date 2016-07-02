@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\ITaskRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\TEntity.cs" />
     <Compile Include="Mappers\MissionMapper.cs" />
     <Compile Include="Mappers\RoleMapper.cs" />
     <Compile Include="Mappers\TaskMapper.cs" />

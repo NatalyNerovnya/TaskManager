@@ -7,6 +7,7 @@
                    UpdateTargetId = "mission",
                    Url = Url.Action("Create", "Mission"),
                    LoadingElementId="loadingIndicator"
+                   
                 };
 }
 <div id="contentBox">
@@ -19,12 +20,15 @@
             </div>
 
             <div class="panel-body">
-                @using (Ajax.BeginForm(options))
+                
+                @using (Ajax.BeginForm("Create", "Mission", options, new { id = "myForm" }))
                 {
                     <fieldset>
                         <div class="form-group">
                             @Html.Label("Description")
                             @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                            @Html.HiddenFor(m => m.TaskId)
+                            @Html.TextBoxFor(m=>m.TaskId)
                         </div>
                         <div class="row">
                             <div class="col-md-11">
@@ -47,7 +51,7 @@
             <div class="panel-heading text-center ">
                 <h3>Points</h3>
                 
-                @Ajax.ActionLink("Finish", "ShowMission", "Mission"/*,new {id = }*/, new AjaxOptions
+                @Ajax.ActionLink("Finish", "ShowMission", "Mission",/*new {id = },*/ new AjaxOptions
                 {
                     InsertionMode = InsertionMode.Replace,
                     UpdateTargetId = "main",
@@ -56,8 +60,8 @@
             </div>
 
             <div class="panel-body">
-                <div id="missions">
-                    </div>
+                <div id="mission">
+                </div>
                 </div>
 
         </div>

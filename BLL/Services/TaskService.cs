@@ -28,7 +28,7 @@ namespace BLL.Services
 
         public IEnumerable<TaskEntity> GetAllEntities()
         {
-            return taskRepository.GetAll().Select(task => task.GetBllEntity());
+            return taskRepository.GetAll().Select(task => task.GetBllEntity()).ToList();
         }
 
         public TaskEntity GetById(int id)
@@ -47,7 +47,8 @@ namespace BLL.Services
         {
             var visitor = new MyExpressionVisitor<TaskEntity, DalTask>(Expression.Parameter(typeof(DalTask), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<DalTask, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
-            return taskRepository.GetAllByPredicate(exp2).Select(task => task.GetBllEntity());
+            //ToList
+            return taskRepository.GetAllByPredicate(exp2).Select(task => task.GetBllEntity()).ToList();
         }
 
         public void Create(TaskEntity entity)
@@ -56,6 +57,16 @@ namespace BLL.Services
             entity.DateCreation = DateTime.Now;
             taskRepository.Create(entity.GetDalEntity());
             uow.Commit();
+        }
+
+        public int CreateTask(TaskEntity entity)
+        {
+            entity.IsChecked = false;
+            entity.DateCreation = DateTime.Now;
+            int id = taskRepository.CreateTask(entity.GetDalEntity());
+            uow.Commit();
+            return id;
+            
         }
 
         //public void Restore(TaskEntity entity)

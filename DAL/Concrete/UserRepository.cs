@@ -30,7 +30,8 @@ namespace DAL.Concrete
         // Should I have Include() there?
         public IEnumerable<DalUser> GetAll()
         {
-            return context.Set<User>().Include(u => u.Roles).Select(user => user.GetDalEntity());
+            var x = context.Set<User>().Include(u => u.Roles).ToList();
+            return x.Select(user => user.GetDalEntity());
         }
 
         public DalUser GetById(int key)

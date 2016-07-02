@@ -19,13 +19,10 @@ namespace BLL.Services
 
         private readonly IMissionRepository missionRepository;
 
-        private string path;
-
-        public MissionService(IUnitOfWork uow, IMissionRepository missionRepository, string path)
+        public MissionService(IUnitOfWork uow, IMissionRepository missionRepository)
         {
             this.uow = uow;
             this.missionRepository = missionRepository;
-            this.path = path;
         }
 
         public IEnumerable<MissionEntity> GetAllEntities()
@@ -49,7 +46,7 @@ namespace BLL.Services
         {
             var visitor = new MyExpressionVisitor<MissionEntity, DalMission>(Expression.Parameter(typeof(DalMission), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<DalMission, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
-            var x = missionRepository.GetAllByPredicate(exp2);
+            var x = missionRepository.GetAllByPredicate(exp2).ToList();
             return x.Select(mission => mission.GetBllEntity());
         }
 

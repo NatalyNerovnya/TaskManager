@@ -46,12 +46,20 @@ namespace DAL.Concrete
         {
             var visitor = new MyExpressionVisitor<DalTask, Task>(Expression.Parameter(typeof(Task), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<Task, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
-            return context.Set<Task>().Where(exp2).Select(task => task.GetDalEntity());
+            var tasks = context.Set<Task>().Where(exp2).ToList();
+            return tasks.Select(task => task.GetDalEntity());
         }
 
         public void Create(DalTask dalTask)
         {
             context.Set<Task>().Add(dalTask.GetORMEntity());
+        }
+
+
+        public int CreateTask(DalTask dalTask)
+        {
+            context.Set<Task>().Add(dalTask.GetORMEntity());
+            return context.Set<Task>().Max(t=>t.Id);
         }
 
         public void Delete(DalTask dalTask)
