@@ -5,7 +5,7 @@
                    InsertionMode = InsertionMode.Replace,
                    HttpMethod="Post",
                    UpdateTargetId = "mission",
-                   Url = Url.Action("Create", "Mission"),
+                   //Url = Url.Action("Create", "Mission"),
                    LoadingElementId="loadingIndicator"
                    
                 };
@@ -20,15 +20,14 @@
             </div>
 
             <div class="panel-body">
-                
-                @using (Ajax.BeginForm("Create", "Mission", options, new { id = "myForm" }))
+              
+                @using (Ajax.BeginForm("Create", "Mission", null, options, new { id = "myForm" }))
                 {
                     <fieldset>
                         <div class="form-group">
-                            @Html.Label("Description")
+                            @Html.LabelFor(m => m.Description)
                             @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                            @Html.HiddenFor(m => m.TaskId)
-                            @Html.TextBoxFor(m=>m.TaskId)
+                            @Html.HiddenFor(m=>m.TaskId)
                         </div>
                         <div class="row">
                             <div class="col-md-11">

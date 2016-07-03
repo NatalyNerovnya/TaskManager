@@ -89,8 +89,7 @@ namespace TaskManager.Controllers
             });
             
             var model = new MissionViewModel(){TaskId = id};
-            
-            return PartialView("_MissionMenu", model);
+            return PartialView("_MissionMenu",model);
 
             
         }

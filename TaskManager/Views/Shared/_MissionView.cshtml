@@ -9,13 +9,13 @@
 {
     <div class=" col-md-12 ">
         <div>
-            <br><br><br><br>
+            <br><br><br>
         </div>
         <div id="gridContentMiss">
             @grid.GetHtml(
                       columns: grid.Columns(
                       grid.Column(columnName: "IsDone", header: " ", format: @<input type="checkbox">),
-                   grid.Column(columnName: "Name"),
+                grid.Column(columnName: "Name"),
                    grid.Column(columnName: "Description")),
         fillEmptyRows: true,
                 nextText: "Next",
