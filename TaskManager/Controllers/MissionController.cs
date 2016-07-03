@@ -43,6 +43,7 @@ namespace TaskManager.Controllers
             var mission = missionService.GetAllByPredicate(m => m.TaskId == taskIdNew).Select(m => m.GetMissionViewModel
                 ());
             ViewBag.Tasks = taskService.GetAllEntities();
+            ViewBag.Precentage = 0;
             return PartialView("_MissionView", mission);
         }
 
@@ -52,6 +53,7 @@ namespace TaskManager.Controllers
             var task = taskService.GetById(id);
             var mission = task.Missions.Select(m => m.GetMissionViewModel()).ToList();
             ViewBag.Tasks = taskService.GetAllEntities();
+            ViewBag.Precentage = GetPrecentage(id);
             return PartialView("_MissionView", mission);
         }
 
@@ -64,7 +66,19 @@ namespace TaskManager.Controllers
                 missionService.MarkAsDone(mission);
 
             var missions = missionService.GetAllByPredicate(m=>m.Id == id).Select(m=>m.GetMissionViewModel()).ToList();
+            ViewBag.Precentage = GetPrecentage(mission.TaskId);
             return PartialView("_MissionView", missions);
+        }
+
+
+        private double GetPrecentage(int id)
+        {
+            var task = taskService.GetById(id);
+            var doneMissions = task.Missions.Where(m => m.IsDone == true).ToList();
+            int done = doneMissions.Count;
+            double all = task.Missions.Count;
+            double prec = ((double)done * 100.0) / all;
+            return prec;
         }
 
     }

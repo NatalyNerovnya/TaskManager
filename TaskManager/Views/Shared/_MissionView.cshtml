@@ -9,9 +9,18 @@
 {
     <div class=" col-md-12 ">
         <div>
-            <br><br><br>
-        </div>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="0" style="width:0%">
+                    @{double p;
+                      if (double.IsNaN(@ViewBag.Precentage) || double.IsInfinity(@ViewBag.Precentage)){p = 0;}
+                      else { p = ViewBag.Precentage; }}
+                    @p %
+                </div>
+            </div>
+            <br>
+       </div>
         <div id="gridContentMiss">
+                        
             @grid.GetHtml(
                       columns: grid.Columns(
           grid.Column(columnName: "IsDone", header: "^", format: @<text>@{bool isDone = item.IsDone;}
@@ -26,14 +35,12 @@
           alternatingRowStyle: "alt-rowGrid",
           rowStyle: "rowGrid")
         </div>
-
-
-
-
-
-
-
     </div>
 
-
 }
+
+<script>
+            jQuery(document).ready(function () {
+                $('#progressBar').attr('aria-valuenow', @ViewBag.Precentage).css('width',@ViewBag.Precentage + '%');
+            });
+</script>

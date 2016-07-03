@@ -20,15 +20,12 @@ namespace TaskManager.Controllers
         {
             this.taskService = taskService;
             this.userService = userService;
-            
-                      
         }
 
         public ActionResult Index(string sortOrder)
         {
             if (User.Identity.IsAuthenticated)
-            {
-                                
+            {   
                 var user = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);
                 var tasks = taskService.GetAllByPredicate(t=>t.FromUserId == user.Id).ToList().GetTasksViewModel();
                 ViewBag.Tasks = tasks;

@@ -15,11 +15,11 @@ namespace TaskManager.Controllers
 {
     public class AccountController : Controller
     {
-        private IUserService _userService;
+        private IUserService userService;
 
         public AccountController(IUserService userService)
         {
-            _userService = userService;
+            this.userService = userService;
         }
 
         public ActionResult Login()
@@ -27,10 +27,6 @@ namespace TaskManager.Controllers
             return View();
         }
 
-        //public AccountController()
-        //{
-        //    //_userService = userService;
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -38,9 +34,8 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                // поиск пользователя в бд
-               
-                var user = _userService.GetOneByPredicate(u => u.Login == model.UserName && u.Password == model.Password);
+
+                var user = userService.GetOneByPredicate(u => u.Login == model.UserName && u.Password == model.Password);
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, true);
@@ -65,26 +60,22 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
-            var user = _userService.GetOneByPredicate(u => u.Login == model.UserName);
+            var user = userService.GetOneByPredicate(u => u.Login == model.UserName);
             if(user != null)
             {
                 ModelState.AddModelError("", "Error! Try another Login");
             }
             if (ModelState.IsValid)
             {
-                 user = _userService.GetOneByPredicate(u => u.Email == model.UserEmail && u.Login == model.UserName);
+                user = userService.GetOneByPredicate(u => u.Email == model.UserEmail && u.Login == model.UserName);
                 if (user == null)
                 {
-
-                    // создаем нового пользователя
-                    _userService.Create(new UserEntity
+                    userService.Create(new UserEntity
                     {
                         Email = model.UserEmail,
                         Password = model.UserPassword,
-                        Login = model.UserName,
-                        Id = model.UserId
+                        Login = model.UserName
                     });
-                    // если пользователь удачно добавлен в бд
                     if (user != null)
                     {
                         FormsAuthentication.SetAuthCookie(model.UserName, true);
