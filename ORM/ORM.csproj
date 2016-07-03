@@ -54,6 +54,10 @@
     <Compile Include="Migrations\201606130932116_DataMigration.Designer.cs">
       <DependentUpon>201606130932116_DataMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607031518539__DataMigration.cs" />
+    <Compile Include="Migrations\201607031518539__DataMigration.Designer.cs">
+      <DependentUpon>201607031518539__DataMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +73,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201606130932116_DataMigration.resx">
       <DependentUpon>201606130932116_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607031518539__DataMigration.resx">
+      <DependentUpon>201607031518539__DataMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
