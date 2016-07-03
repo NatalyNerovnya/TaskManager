@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using System.Threading.Tasks;
+using System.Data.Entity.Migrations;
 using System.Data.Entity;
 using System.Linq.Expressions;
 using Helpers;
@@ -28,7 +28,8 @@ namespace DAL.Concrete
 
         public IEnumerable<DalTask> GetAll()
         {
-            return context.Set<Task>().Select(task => task.GetDalEntity());
+            var tasks = context.Set<Task>().ToList();
+            return tasks.Select(task => task.GetDalEntity());
         }
 
         public DalTask GetById(int key)
@@ -70,7 +71,8 @@ namespace DAL.Concrete
 
         public void Update(DalTask dalTask)
         {
-            context.Entry(dalTask.GetORMEntity()).State = EntityState.Modified;
+            context.Set<ORM.Task>().AddOrUpdate(dalTask.GetORMEntity());
+            context.SaveChanges();
         }
     }
 }

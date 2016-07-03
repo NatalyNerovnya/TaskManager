@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Mappers;
+using System.Data.Entity.Migrations;
 
 namespace DAL.Concrete
 {
@@ -63,7 +64,10 @@ namespace DAL.Concrete
 
         public void Update(DalMission dalMission)
         {
-            context.Entry(dalMission.GetORMEntity()).State = EntityState.Modified;
+            context.Set<ORM.Mission>().AddOrUpdate(dalMission.GetORMEntity());
+            context.SaveChanges();
+
+            //context.Entry(dalMission.GetORMEntity()).State = EntityState.Modified;
         }
     }
 }

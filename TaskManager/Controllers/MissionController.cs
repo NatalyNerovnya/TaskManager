@@ -29,23 +29,21 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(MissionViewModel model)
+        public ActionResult Create(MissionViewModel model, int taskIdNew)
         {
+            var task = taskService.GetById(taskIdNew);
             
             missionService.Create(new MissionEntity
             {
-                Id = model.Id,
-                TaskId = model.TaskId,
-                Name = model.Name,
+                Name = task.Name,
+                TaskId = taskIdNew,
                 IsDone = false,
                 Description = model.Description
             });
-            var mission = missionService.GetAllByPredicate(m => m.TaskId == model.TaskId).Select(m=>m.GetMissionViewModel
+            var mission = missionService.GetAllByPredicate(m => m.TaskId == taskIdNew).Select(m => m.GetMissionViewModel
                 ());
-            //return PartialView("_MissionMenu");
+            ViewBag.Tasks = taskService.GetAllEntities();
             return PartialView("_MissionView", mission);
-            
-            //return RedirectToAction("ShowMission",new {id = model.TaskId});
         }
 
         [HttpGet]
@@ -53,6 +51,7 @@ namespace TaskManager.Controllers
         {
             var task = taskService.GetById(id);
             var mission = task.Missions.Select(m => m.GetMissionViewModel()).ToList();
+            ViewBag.Tasks = taskService.GetAllEntities();
             return PartialView("_MissionView", mission);
         }
 

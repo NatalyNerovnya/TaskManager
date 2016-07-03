@@ -287,6 +287,7 @@
     <Content Include="Views\Shared\_MissionMenu.cshtml" />
     <Content Include="Views\Shared\_TaskMenu.cshtml" />
     <Content Include="Views\Shared\_MissionView.cshtml" />
+    <Content Include="Views\Shared\_SearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

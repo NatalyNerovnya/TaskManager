@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TaskManager.Models.MissionViewModel>
 
 @{
-    var grid = new WebGrid(Model, rowsPerPage: 4, ajaxUpdateContainerId: "gridContentMiss");
+    var grid = new WebGrid(Model, ajaxUpdateContainerId: "gridContentMiss", rowsPerPage:4);
 
 }
 
@@ -14,19 +14,24 @@
         <div id="gridContentMiss">
             @grid.GetHtml(
                       columns: grid.Columns(
-                      grid.Column(columnName: "IsDone", header: " ", format: @<input type="checkbox">),
-                grid.Column(columnName: "Name"),
-                   grid.Column(columnName: "Description")),
-        fillEmptyRows: true,
-                nextText: "Next",
-                previousText: "Previos",
+          grid.Column(columnName: "IsDone", header: "^", format: @<text>@{bool isDone = item.IsDone;}
+                            @Html.CheckBox(" ", isDone, new { @class = @item.Id, @id = "myMiss" }) </text>),
+          grid.Column(columnName: "Name"),
+          grid.Column(columnName: "Description")),
+          nextText: "Next",
+          previousText: "Previos",
+          tableStyle: "grid",
+          headerStyle: "headerGrid",
+          footerStyle: "footerGrid",
+          alternatingRowStyle: "alt-rowGrid",
+          rowStyle: "rowGrid")
+        </div>
 
-                tableStyle: "grid",
-                headerStyle: "headerGrid",
-                footerStyle: "footerGrid",
-                alternatingRowStyle: "alt-rowGrid",
-                rowStyle: "rowGrid")
-            </div>
+
+
+
+
+
 
     </div>
 

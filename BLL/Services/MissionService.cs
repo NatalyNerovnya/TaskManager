@@ -65,8 +65,6 @@ namespace BLL.Services
                 entity.IsDone = false;
             missionRepository.Update(entity.GetDalEntity());
             uow.Commit();
-
-
         }
 
         public void Edit(MissionEntity entity)
@@ -77,44 +75,9 @@ namespace BLL.Services
 
         public void Delete(MissionEntity entity)
         {
-            //if (File.Exists(entity.Path))
-            //    File.Delete(entity.Path);
             missionRepository.Delete(entity.GetDalEntity());
             uow.Commit();
         }
 
-        //public void AddToCart(MissionEntity entity)
-        //{
-
-        //    entity.IsDelete = true;
-        //    missionRepository.Update(entity.GetDalEntity());
-        //    uow.Commit();
-        //}
-
-        //public string RenameFile(int id, string newName)
-        //{
-        //    var file = missionRepository.GetById(id);
-        //    string oldName = file.Name;
-        //    var directory = Path.GetDirectoryName(file.Path);
-        //    if (directory != null)
-        //    {
-        //        var newPath = Path.Combine(directory, newName + file.Type);
-        //        try
-        //        {
-        //            if (File.Exists(file.Path))
-        //                File.Move(file.Path, newPath);
-        //        }
-        //        catch
-        //        {
-        //            return oldName;
-        //        }
-        //        file.Name = newName;
-        //        file.Path = newPath;
-        //        missionRepository.Update(file);
-        //        uow.Commit();
-        //        return newName;
-        //    }
-        //    return oldName;
-        //}
     }
 }

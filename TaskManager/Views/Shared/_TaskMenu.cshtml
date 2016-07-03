@@ -3,7 +3,7 @@
 @{
     var options = new AjaxOptions
     {
-        InsertionMode = InsertionMode.Replace,
+        //InsertionMode = InsertionMode.Replace,
         UpdateTargetId = "main",
         LoadingElementId = "loadingIndicator"
     };
@@ -30,13 +30,13 @@
 
                 }
 
-                @using (Ajax.BeginForm("CreateTask", "Home",options, new { id="myForm"}))
+                @using (Ajax.BeginForm("CreateTask", "Home",options))
                 {
 
 
                     <fieldset>
                         <legend>Creating new task</legend>
-                        <div class="form-group">
+                        <div class="form-group" id="form-id">
                             @Html.LabelFor(m => m.Name)
                             @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Enter name of the task" })
                         </div>

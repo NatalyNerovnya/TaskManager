@@ -25,7 +25,6 @@
                 @Html.Partial("_LeftMenu")
             </div>
             <div class="col-md-9">
-                @*@Html.Partial("_TaskMenu")*@
                 <div class="row main" id="main">
                     @RenderBody()
                 </div>
@@ -38,7 +37,6 @@
     <script src="~/Scripts/jquery.validate.bootstrap.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.bootstrap.min.js"></script>
     <script src="~/Content/bootstrap-3.3.4-dist/js/customJS.js"></script>
-    <script src="~/Scripts/JavaScript.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

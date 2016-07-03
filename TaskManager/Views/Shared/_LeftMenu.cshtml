@@ -9,13 +9,13 @@
         @if (User.Identity.IsAuthenticated)
         {
             <li>
-                <a data-toggle="tab" href="#add" >
+                <a data-toggle="tab" href="#add">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </li>
 
             <li>
-                <a data-toggle="tab" href="#tasks" >
+                <a data-toggle="tab" href="#tasks">
                     <span class="glyphicon glyphicon-th-list"></span>
                 </a>
             </li>
@@ -40,45 +40,60 @@
 
                 <div class="well">
                     <br><br><br><br>
-                   @Ajax.ActionLink("Create task", "CreateTask", "Home", new AjaxOptions
+
+                    @Ajax.ActionLink("Create task", "CreateTask", "Home", new AjaxOptions
                 {
                     HttpMethod = "Get",
                     InsertionMode = InsertionMode.Replace,
                     UpdateTargetId = "main",
+                    LoadingElementId = "loadingIndicator",
 
                 }, new { @type = "button", @class = "btn btn-block btn-primary" })
                 </div>
-                
-                
 
-                
+
+
+
             </div>
 
             <div class="tab-pane" id="tasks">
                 <div class="well">
-                    <strong>Total Tasks : </strong> @ViewBag.Tasks.CountTasks<br>
-                    <strong>Checked Tasks : </strong>  @ViewBag.Tasks.CountCheckedTasks<br><br>
-
                     @Ajax.ActionLink("Show give away tasks", "ShowFromUserTasks", "Home", new AjaxOptions
-                {
-                    
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "main",
-
-                }, new { @type = "button", @class = "btn btn-block btn-primary" }) <br>
+                                                        {
+                                                            InsertionMode = InsertionMode.Replace,
+                                                            UpdateTargetId = "main",
+                                                            LoadingElementId = "loadingIndicator"
+                                                        },
+                                                        new { @type = "button", @class = "btn btn-block btn-primary" })
 
                     @Ajax.ActionLink("Show my tasks", "ShowUserTasks", "Home", new AjaxOptions
-                {
+                                                        {
+                                                            InsertionMode = InsertionMode.Replace,
+                                                            UpdateTargetId = "main",
+                                                            LoadingElementId = "loadingIndicator"
+                                                        },
+                                                        new { @type = "button", @class = "btn btn-block btn-primary" })
 
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "main",
+                    @Ajax.ActionLink("Show give away checked tasks", "ShowCheckedFromUserTasks", "Home", new AjaxOptions
+                                                        {
+                                                            InsertionMode = InsertionMode.Replace,
+                                                            UpdateTargetId = "main",
+                                                            LoadingElementId = "loadingIndicator"
+                                                        },
+                                                       new { @type = "button", @class = "btn btn-block btn-primary" })
 
-                }, new { @type = "button", @class = "btn btn-block btn-primary" })
+                    @Ajax.ActionLink("Show my checked tasks", "ShowCheckedTasks", "Home", new AjaxOptions
+                                                        {
+                                                            InsertionMode = InsertionMode.Replace,
+                                                            UpdateTargetId = "main",
+                                                            LoadingElementId = "loadingIndicator"
+                                                        },
+                                                       new { @type = "button", @class = "btn btn-block btn-primary" })
 
-                   
+
                 </div>
             </div>
         }
     </div>
+    <img id="loadingIndicator" style="display:none" src="@Url.Content("~/Content/Images/Preloader_2/Preloader_2.gif")" />
 </div>
-

@@ -28,7 +28,8 @@ namespace BLL.Services
 
         public IEnumerable<TaskEntity> GetAllEntities()
         {
-            return taskRepository.GetAll().Select(task => task.GetBllEntity()).ToList();
+            var tasks = taskRepository.GetAll();
+            return tasks.Select(task => task.GetBllEntity()).ToList();
         }
 
         public TaskEntity GetById(int id)
@@ -65,24 +66,18 @@ namespace BLL.Services
             entity.DateCreation = DateTime.Now;
             int id = taskRepository.CreateTask(entity.GetDalEntity());
             uow.Commit();
-            return id;
-            
+            return id;            
         }
 
-        //public void Restore(TaskEntity entity)
-        //{
-        //    entity.IsDelete = false;
-        //    taskRepository.Update(entity.GetDalEntity());
-        //    uow.Commit();
-        //}
-
-        //public void MakeOpen(int id)
-        //{
-        //    var file = taskRepository.GetOneByPredicate(f => f.Id == id);
-        //    file.IsOpen = !(file.IsOpen);
-        //    taskRepository.Update(file);
-        //    uow.Commit();
-        //}
+        public void MarkAsChecked(TaskEntity entity)
+        {
+            if (entity.IsChecked == false)
+                entity.IsChecked = true;
+            else
+                entity.IsChecked = false;
+            taskRepository.Update(entity.GetDalEntity());
+            uow.Commit();
+        }
 
         public void Edit(TaskEntity entity)
         {
@@ -94,26 +89,6 @@ namespace BLL.Services
         {
             taskRepository.Delete(entity.GetDalEntity());
             uow.Commit();
-        }
-
-        public IEnumerable<TaskEntity> SortTasks(IEnumerable<TaskEntity> tasks, string sortOrder)
-        {
-            switch (sortOrder)
-            {
-                case "Checked desc":
-                    tasks = tasks.OrderByDescending(t => t.IsChecked);
-                    break;
-                case "Date":
-                    tasks = tasks.OrderBy(t => t.DateCreation);
-                    break;
-                case "Date desc":
-                    tasks = tasks.OrderByDescending(t => t.DateCreation);
-                    break;
-                default:
-                    tasks = tasks.OrderBy(t => t.IsChecked);
-                    break;
-            }
-            return tasks;
         }
 
     }

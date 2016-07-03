@@ -5,8 +5,8 @@
                    InsertionMode = InsertionMode.Replace,
                    HttpMethod="Post",
                    UpdateTargetId = "mission",
-                   //Url = Url.Action("Create", "Mission"),
-                   LoadingElementId="loadingIndicator"
+                   LoadingElementId="loadingIndicator",
+                   
                    
                 };
 }
@@ -19,19 +19,18 @@
                 <h3>Add point</h3>
             </div>
 
-            <div class="panel-body">
-              
-                @using (Ajax.BeginForm("Create", "Mission", null, options, new { id = "myForm" }))
+            <div class="panel-body" id="form-id">
+                @using (Ajax.BeginForm("Create", "Mission", new { taskIdNew = ViewBag.TaskIdNew }, options))
                 {
                     <fieldset>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Description)
-                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                            @Html.HiddenFor(m=>m.TaskId)
+
+                            @Html.Label("Description")
+                            <p>@Html.TextAreaFor(m => m.Description, new { @class = "form-control", value = "" })</p>
                         </div>
                         <div class="row">
                             <div class="col-md-11">
-                                <button type="submit" class="btn btn-success btn-lg btn-block">Add point</button><img id="loadingIndicator" style="display:none" src="@Url.Content("~/Content/Images/Preloader_2/Preloader_2.gif")"/>
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Add point</button><img id="loadingIndicator" style="display:none" src="@Url.Content("~/Content/Images/Preloader_2/Preloader_2.gif")" />
                             </div>
 
                         </div>
@@ -39,7 +38,7 @@
                 }
 
 
-                </div>
+            </div>
 
             </div>
         </div>
@@ -50,12 +49,12 @@
             <div class="panel-heading text-center ">
                 <h3>Points</h3>
                 
-                @Ajax.ActionLink("Finish", "ShowMission", "Mission",/*new {id = },*/ new AjaxOptions
+                @Ajax.ActionLink("Finish", "ShowMission", "Mission", new { id = ViewBag.TaskIdNew }, new AjaxOptions
                 {
                     InsertionMode = InsertionMode.Replace,
                     UpdateTargetId = "main",
 
-                }, new { @type = "button", @class = "btn btn-success btn-lg btn-block" }) <br>
+                }, new { @type = "button", @class = "btn btn-success btn-lg btn-block" })
             </div>
 
             <div class="panel-body">
