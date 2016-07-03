@@ -22,6 +22,7 @@ namespace TaskManager.Controllers
             this.userService = userService;
         }
 
+        [HttpGet]
         public ActionResult Login()
         {
             return View();

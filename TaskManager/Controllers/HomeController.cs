@@ -34,6 +34,32 @@ namespace TaskManager.Controllers
             return View("StartView");
         }
 
+        public ActionResult SendMail(int id)
+        {
+            var task = taskService.GetById(id);
+            var fromUser = userService.GetById(task.FromUserId);
+            EmailModel model = new EmailModel
+            {
+                Body = "You have new task from " + fromUser.Login.ToString() + " .\n" + task.DateCreation,
+                From = fromUser.Email,
+                To = userService.GetById(task.ToUserId).Email,
+                Subject = "Task manager notification"
+            };
+                try
+                {
+                    new EmailController().SendEmail(model).Deliver();
+
+                    return PartialView("_Success.html", model);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    return PartialView("_Error.html", model);
+                }
+
+        }
+
+
         
         public ActionResult ShowUserTasks()
         {

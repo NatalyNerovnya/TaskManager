@@ -55,6 +55,13 @@
                     UpdateTargetId = "main",
 
                 }, new { @type = "button", @class = "btn btn-success btn-lg btn-block" })
+
+                @Ajax.ActionLink("Finish and notify", "SendMail", "Home", new { id = ViewBag.TaskIdNew }, new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "main",
+
+                }, new { @type = "button", @class = "btn btn-success btn-lg btn-block" })
             </div>
 
             <div class="panel-body">

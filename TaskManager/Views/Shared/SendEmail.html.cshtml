@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = null;
+}
+@model TaskManager.Models.EmailModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SendEmail</title>
+</head>
+<body>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h2 style="color:green">SenDEmail!</h2></div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.From)
+                    @Html.DisplayFor(m => m.From)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.To)
+                    @Html.DisplayFor(m => m.To)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Subject)
+                    @Html.DisplayFor(m => m.Subject)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Body)
+                    @Html.DisplayFor(m => m.Body)
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
