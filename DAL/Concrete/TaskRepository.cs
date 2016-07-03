@@ -59,7 +59,7 @@ namespace DAL.Concrete
         public int CreateTask(DalTask dalTask)
         {
             context.Set<Task>().Add(dalTask.GetORMEntity());
-            return context.Set<Task>().Max(t=>t.Id);
+            return context.Set<Task>().Max(t=>t.Id) + 1;
         }
 
         public void Delete(DalTask dalTask)
