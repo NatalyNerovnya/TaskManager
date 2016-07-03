@@ -81,7 +81,6 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Interfaces\IMissionService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
-    <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ITaskService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Mappers\MissionMapper.cs" />
