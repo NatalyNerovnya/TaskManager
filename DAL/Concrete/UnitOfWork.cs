@@ -17,7 +17,7 @@ namespace DAL.Concrete
         public UnitOfWork(DbContext context)
         {
             if (context == null)
-                throw new ArgumentNullException("entitiesContext");
+                throw new ArgumentNullException();
             Context = context;
         }
 
@@ -25,27 +25,7 @@ namespace DAL.Concrete
         {
             if (Context != null)
             {
-                try
-                {
-                    
                     Context.SaveChanges();
-                }
-                catch (DbEntityValidationException dbEx)
-                {
-                    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            Trace.TraceInformation("Property: {0} Error: {1}", validationError.
-              PropertyName, validationError.ErrorMessage);
-                        }
-                    }
-                }
-
-
-
-
-                //Context.SaveChanges();
             }
         }
 

@@ -39,16 +39,17 @@
             <div class="tab-pane" id="add">
 
                 <div class="well">
-                    <br><br><br><br>
+                    <br><br><br><br><br><br>
 
                     @Ajax.ActionLink("Create task", "CreateTask", "Home", new AjaxOptions
-                {
-                    HttpMethod = "Get",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "main",
-                    LoadingElementId = "loadingIndicator",
+                                {
+                                    HttpMethod = "Get",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "main",
+                                    LoadingElementId = "loadingIndicator",
 
-                }, new { @type = "button", @class = "btn btn-block btn-primary" })
+                                },
+                new { @type = "button", @class = "btn btn-block btn-primary" })
                 </div>
 
 
@@ -73,7 +74,7 @@
                                                             LoadingElementId = "loadingIndicator"
                                                         },
                                                         new { @type = "button", @class = "btn btn-block btn-primary" })
-                    
+
 
                     @Ajax.ActionLink("Show give away checked tasks", "ShowCheckedFromUserTasks", "Home", new AjaxOptions
                                                         {

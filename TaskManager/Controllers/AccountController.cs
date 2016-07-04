@@ -21,14 +21,12 @@ namespace TaskManager.Controllers
         {
             this.userService = userService;
         }
-
-        
+                
         public ActionResult Login()
         {
             return View();
         }
-
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
@@ -80,7 +78,6 @@ namespace TaskManager.Controllers
 
                         FormsAuthentication.SetAuthCookie(model.UserName, true);
                         return RedirectToAction("Index", "Home");
-
                 }
                 else
                 {
@@ -89,7 +86,6 @@ namespace TaskManager.Controllers
             }
 
             return View(model);
-
         }
 
         public ActionResult Logoff()

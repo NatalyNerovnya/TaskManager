@@ -61,11 +61,8 @@ namespace TaskManager.Controllers
                     System.Diagnostics.Debug.WriteLine(e.Message);
                     return PartialView("_Error.html", model);
                 }
-
         }
 
-
-        
         public ActionResult ShowUserTasks()
         {
             var user = userService.GetOneByPredicate(u => u.Login == User.Identity.Name);  
@@ -74,7 +71,6 @@ namespace TaskManager.Controllers
             ViewBag.Show = false;
             return PartialView("_TasksView", tasks.Tasks);
         }
-
         
         public ActionResult ShowFromUserTasks()
         {

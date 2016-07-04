@@ -16,11 +16,12 @@ namespace BLL.Services
     public class MissionService : IMissionService
     {
         private readonly IUnitOfWork uow;
-
         private readonly IMissionRepository missionRepository;
 
         public MissionService(IUnitOfWork uow, IMissionRepository missionRepository)
         {
+            if (uow == null || missionRepository == null)
+                throw new ArgumentNullException();
             this.uow = uow;
             this.missionRepository = missionRepository;
         }
@@ -32,6 +33,8 @@ namespace BLL.Services
 
         public MissionEntity GetById(int id)
         {
+            if (id < 0)
+                throw new ArgumentException();
             return missionRepository.GetById(id).GetBllEntity();
         }
 
@@ -46,8 +49,8 @@ namespace BLL.Services
         {
             var visitor = new MyExpressionVisitor<MissionEntity, DalMission>(Expression.Parameter(typeof(DalMission), f.Parameters[0].Name));
             var exp2 = Expression.Lambda<Func<DalMission, bool>>(visitor.Visit(f.Body), visitor.NewParameterExp);
-            var x = missionRepository.GetAllByPredicate(exp2).ToList();
-            return x.Select(mission => mission.GetBllEntity());
+            var mission = missionRepository.GetAllByPredicate(exp2).ToList();
+            return mission.Select(m => m.GetBllEntity());
         }
 
         public void Create(MissionEntity entity)

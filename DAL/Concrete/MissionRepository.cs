@@ -22,7 +22,7 @@ namespace DAL.Concrete
         {
             if (uow == null)
             {
-                throw new ArgumentNullException("entitiesContext");
+                throw new ArgumentNullException();
             }
             this.context = uow;
         }
@@ -66,8 +66,6 @@ namespace DAL.Concrete
         {
             context.Set<ORM.Mission>().AddOrUpdate(dalMission.GetORMEntity());
             context.SaveChanges();
-
-            //context.Entry(dalMission.GetORMEntity()).State = EntityState.Modified;
         }
     }
 }

@@ -51,10 +51,14 @@ namespace TaskManager.Controllers
         public ActionResult ShowMission(int id)
         {
             var task = taskService.GetById(id);
-            var mission = task.Missions.Select(m => m.GetMissionViewModel()).ToList();
             ViewBag.Tasks = taskService.GetAllEntities();
-            ViewBag.Precentage = GetPrecentage(id);
-            return PartialView("_MissionView", mission);
+            if (!ReferenceEquals(task.Missions,null))
+            {
+                var mission = task.Missions.Select(m => m.GetMissionViewModel()).ToList();
+                ViewBag.Precentage = GetPrecentage(id);
+                return PartialView("_MissionView", mission);
+            }
+            return RedirectToAction("ShowFromUserTasks","Home");
         }
 
         [HttpPost]
@@ -77,8 +81,7 @@ namespace TaskManager.Controllers
             var doneMissions = task.Missions.Where(m => m.IsDone == true).ToList();
             int done = doneMissions.Count;
             double all = task.Missions.Count;
-            double prec = ((double)done * 100.0) / all;
-            return prec;
+            return ((double)done * 100.0) / all;
         }
 
     }

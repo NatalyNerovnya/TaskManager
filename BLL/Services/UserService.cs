@@ -55,8 +55,7 @@ namespace BLL.Services
 
         public void Create(UserEntity user)
         {
-            //user.Password = Crypto.HashPassword(user.Password);
-            user.Roles = new List<RoleEntity> { roleRepository.GetById(2).GetBllEntity() };
+            user.Roles = new List<RoleEntity> { roleRepository.GetById(3).GetBllEntity() };
             userRepository.Create(user.GetDalEntity());
             if (!(Directory.Exists(user.Login)))
             {
