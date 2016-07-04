@@ -22,7 +22,12 @@ namespace TaskManager.Controllers
             this.userService = userService;
         }
 
-        public ActionResult Index(string sortOrder)
+        public ActionResult Main()
+        {
+            return View("_ViewStart");
+        }
+
+        public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {   

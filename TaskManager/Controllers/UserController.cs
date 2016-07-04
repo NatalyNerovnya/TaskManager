@@ -10,6 +10,7 @@ namespace TaskManager.Controllers
     public class UserController : Controller
     {
         private readonly IUserService service;
+
         public UserController(IUserService service)
         {
             this.service = service;
@@ -17,14 +18,10 @@ namespace TaskManager.Controllers
 
         public ActionResult Index()
         {
-            var users = service.GetAllEntities();
-            ViewBag.Users = users;
+            ViewBag.Users = service.GetAllEntities();
+            ViewBag.User = service.GetOneByPredicate(u => u.Login == User.Identity.Name);
             return PartialView("_UsersView");
         }
 
-        public ActionResult MakeAdmin()
-        {
-            return View();
-        }
     }
 }

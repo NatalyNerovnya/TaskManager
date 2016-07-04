@@ -12,7 +12,7 @@ namespace TaskManager.Controllers
         {
             Response.StatusCode = 404;
             Response.TrySkipIisCustomErrors = true;
-            return View();
+            return View("Error404");
         }
            
     }

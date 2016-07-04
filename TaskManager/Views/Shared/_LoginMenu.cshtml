@@ -4,13 +4,20 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@User.Identity.Name <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li>@Html.ActionLink("User", "Index", "User", new { @class = "user" })</li>
-                <li>
-                    @Ajax.ActionLink("Admin", "Index", "User", new AjaxOptions
+                <li>@Ajax.ActionLink("User", "Index", "User", null, new AjaxOptions
                 {
                     HttpMethod = "GET",
                     InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "main"
+                    UpdateTargetId = "main",
+                    LoadingElementId = "loadingIndicator"
+                })</li>
+                <li>
+                    @Ajax.ActionLink("Admin", "Index", "User",null, new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "main",
+                    LoadingElementId = "loadingIndicator"
                 })
                 </li>
                 <li class="divider"></li>

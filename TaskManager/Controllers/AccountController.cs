@@ -22,7 +22,7 @@ namespace TaskManager.Controllers
             this.userService = userService;
         }
 
-        [HttpGet]
+        
         public ActionResult Login()
         {
             return View();
@@ -48,7 +48,7 @@ namespace TaskManager.Controllers
                 }
             }
 
-            return View(model);
+            return RedirectToAction("Index", "Home", model);
         }
 
         [AllowAnonymous]
@@ -68,8 +68,8 @@ namespace TaskManager.Controllers
             }
             if (ModelState.IsValid)
             {
-                user = userService.GetOneByPredicate(u => u.Email == model.UserEmail && u.Login == model.UserName);
-                if (user == null)
+                var existUser = userService.GetOneByPredicate(u => u.Email == model.UserEmail && u.Login == model.UserName);
+                if (existUser == null)
                 {
                     userService.Create(new UserEntity
                     {
@@ -77,11 +77,10 @@ namespace TaskManager.Controllers
                         Password = model.UserPassword,
                         Login = model.UserName
                     });
-                    if (user != null)
-                    {
+
                         FormsAuthentication.SetAuthCookie(model.UserName, true);
                         return RedirectToAction("Index", "Home");
-                    }
+
                 }
                 else
                 {
